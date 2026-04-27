@@ -1,0 +1,76 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.93), rgba(0, 0, 0, 0.93)), url('../img/fundo_ceu.jpeg');
+    background-size: cover;
+}
+
+
+h2{
+    color: black;
+    font-size: 30px;
+}
+
+
+.container_lec{
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid white;
+    width: 850px;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 0;
+    background-color: white;
+}
+
+.lec_direito_img img{
+    width: 380px;
+    height: 600px;
+    border-radius: 20px;
+}
+.lec_esquerdo_ipt{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ft_e_nm{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+}
+
+input{
+    border-radius: 10px;
+    width: 350px;
+    height: 45px;
+    background-color: #080807;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+}
+button{
+    width: 350px;
+    height: 45px;
+    border-radius: 20px;   
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    background-color: #f65d09;
+    border: 0;
+}
+
+.ipts_lg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}

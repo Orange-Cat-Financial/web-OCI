@@ -21,7 +21,7 @@
       </div>
       <div class="criar_conta_he">
         <div class="entrarHeader">
-          <a class="bh_entrar" hre>Entrar</a
+          <a class="bh_entrar" href="login.html">Entrar</a
           ><a class="bh_cadastrar">Criar conta</a>
         </div>
       </div>
@@ -78,3 +78,16 @@
     </div>
   </body>
 </html>
+<script>
+  function verificarScroll() {
+    let navbar = document.getElementById("cabecalho");
+
+    if (window.scrollY > 50) {
+      navbar.classList.add("scroll");
+    } else {
+      navbar.classList.remove("scroll");
+    }
+  }
+
+  window.onscroll = verificarScroll;
+</script>
