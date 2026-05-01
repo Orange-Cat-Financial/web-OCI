@@ -135,7 +135,7 @@
       finalizarAguardar();
       return false;
     } else {
-      setInterval(sumirMensagem, 5000);
+      setTimeout(sumirMensagem, 1000);
     }
     for (let i = 0; i < caracteresEspeciais.length; i++) {
       if (senhaVar.includes(caracteresEspeciais[i])) {
