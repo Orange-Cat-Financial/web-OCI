@@ -1,0 +1,126 @@
+.caixa_adicionar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a1a1a;
+    width: 800px;
+    height: 500px;
+    border-radius: 8px;
+    border: 1px solid #353638;
+    
+}
+
+.pt_direita_conteudo{
+    display: flex;
+    
+}
+
+.despesa_receita{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    border-bottom: 1px solid #353638;
+    gap: 100px;
+    font-family: "Outfit", sans-serif;
+
+
+}
+
+.despesa_receita input{
+    display: none;
+
+}
+
+
+.despesa_receita input:checked + .seta_cm_txt {
+    background-color: #6c6969;
+}
+
+
+
+
+.setas{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.st_cm{
+    background-color: green;
+}
+.st_bx{
+    background-color: red;
+}
+
+.seta_cm_txt{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 29px;
+    padding: 10px 70px;
+    gap: 10px;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.seta_cm_txt:hover{ 
+    background-color: #2a2a2a;
+}
+
+.dinheiro{
+    font-size: 50px;
+}
+
+#qtd_dinheiro_exibida{
+    font-size: 50px;
+    margin-bottom: 80px;
+    margin-top: 40px;
+}
+
+.ipts_baixo{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.nm_ipts{
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+option{
+    font-weight: bold;
+
+}
+.nm_ipts input{
+    width: 300px;
+    height: 24px;
+    color: #f65d09;
+    font-weight: bold;
+}
+
+.nm_ipts select{
+    width: 300px;
+    height: 24px;
+    color: #f65d09;
+    font-weight: bold;
+}
+
+.linhas{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    width: 100%;
+    padding-left: 50px;
+    margin-bottom: 20px;
+
+}

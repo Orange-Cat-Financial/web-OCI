@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orange Cat</title>
+    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/funci.css" />
+    <link rel="stylesheet" href="css/addTr.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header id="cabecalho">
+      <div class="ft_e_nm">
+        <a href="../index.html">
+          <img
+            src="assets/icones/log-sem-fundo.png"
+            style="height: 90px; width: 80px"
+          />
+        </a>
+        <span> <span style="color: #f65d09">Orange</span> Cat</span>
+      </div>
+      <div class="criar_conta_he">
+        <div class="entrarHeader">
+          <a class="bh_entrar" href="../login.html">Entrar</a
+          ><a class="bh_cadastrar" href="../cadastro.html">Criar conta</a>
+        </div>
+      </div>
+    </header>
+    <div id="pt_baixo_funci">
+      <div class="pt_esquerda_menu">sqws</div>
+      <div class="pt_direita_conteudo">
+        <div class="caixa_adicionar">
+          <div class="despesa_receita">
+            <input
+              type="radio"
+              name="tipo"
+              id="tip_receita"
+              onclick="recOuDes()"
+            />
+            <label for="tip_receita" class="seta_cm_txt">
+              <img src="assets/png/cima_branco.png" class="setas st_cm" />
+              <span>Receita</span>
+            </label>
+            <input type="radio" name="tipo" id="tip_despesa" />
+            <label for="tip_despesa" class="seta_cm_txt">
+              <img src="assets/png/baixo_branco.png" class="setas st_bx" />
+              <span>Despesa</span>
+            </label>
+          </div>
+          <span id="qtd_dinheiro_exibida" onclick="focarIpt()">R$0.00</span>
+          <div class="ipts_baixo">
+            <div class="linhas l1">
+              <div class="nm_ipts div_ipt_valor">
+                <span class="indicador">Valor:</span>
+                <input type="number" id="ipt_valor" oninput="mudarDinheiro()" />
+              </div>
+              <div class="nm_ipts div_slc_tipo">
+                <span class="indicador">Categoria:</span>
+                <select id="slc_categoria">
+                  <option value="o1">Transporte</option>
+                  <option value="o2">Comida</option>
+                  <option value="o3">Aluguel</option>
+                  <option value="o4">Roupa</option>
+                </select>
+              </div>
+            </div>
+            <div class="linhas l1">
+              <div class="nm_ipts div_ipt_valor">
+                <span class="indicador">Data:</span>
+                <input type="date" id="ipt_data" />
+              </div>
+              <div class="nm_ipts div_slc_tipo">
+                <span class="indicador">Categoria:</span>
+                <input type="text" id="ipt" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  function recOuDes() {
+    let borda;
+    caixa.classList.toggle("ativa");
+  }
+
+  function focarIpt() {
+    document.getElementById("ipt_valor").focus();
+  }
+
+  function mudarDinheiro() {
+    let valor = Number(ipt_valor.value);
+    qtd_dinheiro_exibida.innerHTML = `${valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    })}`;
+  }
+</script>

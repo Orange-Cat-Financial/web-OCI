@@ -1,0 +1,21 @@
+body{
+    background-color: black;
+    
+}
+
+#cabecalho{
+    border-bottom: 1px solid #353638 ;
+}
+
+#pt_baixo_funci{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 50px;
+}
+
+.pt_esquerda_menu{
+    background-color: #1a1a1a;
+    width: 250px;
+    height: calc(100vh - 71px);
+}
