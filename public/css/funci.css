@@ -1,5 +1,6 @@
 body{
     background-color: black;
+    text-decoration: none;
     
 }
 
@@ -12,10 +13,32 @@ body{
     flex-direction: row;
     align-items: flex-end;
     gap: 50px;
+    align-items: flex-start;
+    
+    
+}
+a{
+    font-weight: normal;
+
 }
 
 .pt_esquerda_menu{
     background-color: #1a1a1a;
     width: 250px;
+    color: white;
     height: calc(100vh - 71px);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    font-size: 25px;
+}
+
+.ls_esq{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    gap: 20px;
 }

@@ -1,0 +1,33 @@
+
+
+.container{
+    margin: 0;
+     display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 40px; 
+  margin-left: 5px;
+  margin-bottom: 20px;
+}
+
+.item {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.item:hover{
+    scale: 1.1;
+}
+
+.item img{
+  height: 135px;
+}
+
+.pt_esquerda_menu{
+    min-height: 100vh;
+    position: sticky;
+    top: 0px;
+    bottom: 0;
+   
+}

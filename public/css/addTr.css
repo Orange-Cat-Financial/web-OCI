@@ -6,12 +6,33 @@
     width: 800px;
     height: 500px;
     border-radius: 8px;
-    border: 1px solid #353638;
+    border: 2px solid #353638;
+    margin-top: 25px;
     
 }
 
+
+
+
+
+.usuarioHeader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.usuarioHeader a{
+    font-size: 22px;
+
+}
+
+
 .pt_direita_conteudo{
     display: flex;
+    flex-direction: column;
+    font-size: 22px;
+    padding-top: 0px;
     
 }
 
@@ -22,9 +43,10 @@
     align-items: center;
     height: 50px;
     width: 100%;
-    border-bottom: 1px solid #353638;
+    border-bottom: 2px solid #353638;
     gap: 100px;
     font-family: "Outfit", sans-serif;
+    
 
 
 }
@@ -79,8 +101,8 @@
 
 #qtd_dinheiro_exibida{
     font-size: 50px;
-    margin-bottom: 80px;
     margin-top: 40px;
+    border-bottom: 5px solid #f65d09;
 }
 
 .ipts_baixo{
@@ -103,16 +125,24 @@ option{
 }
 .nm_ipts input{
     width: 300px;
-    height: 24px;
+    height: 28px;
+    background-color: #1a1a1a;
     color: #f65d09;
     font-weight: bold;
+    border: 2px solid #353638;
+    border-radius: 5px;
 }
 
 .nm_ipts select{
+    background-color: #1a1a1a;
+    border: 2px solid #353638;
     width: 300px;
-    height: 24px;
+    height: 33px;
     color: #f65d09;
     font-weight: bold;
+    border-radius: 5px;
+
+
 }
 
 .linhas{
@@ -123,4 +153,41 @@ option{
     padding-left: 50px;
     margin-bottom: 20px;
 
+}
+
+#dt_e_ctg{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 60px;
+    margin-top: 20px;
+    font-size: 28px;
+    align-items: center;
+
+
+}
+
+#dt_e_ctg img{
+    width: 30px;
+    height: 30px;
+}
+
+.info_baixo_valor{
+    width: 32%;
+    display: flex;
+    align-items: center;
+}
+
+button{
+    margin-top: 10px;
+    background-color: #f65d09;
+    color: white;
+    width: 200px;
+    margin-right: 20px;
+    height: 50px;
+    font-family: "Krona One", sans-serif;
+    font-size: 25px;
+    border-radius: 10px;
+    border: 0px;
 }

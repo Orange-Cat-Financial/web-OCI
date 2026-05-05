@@ -3,7 +3,6 @@ var usuarioModel = require("../models/usuarioModel.js");
 function autenticar(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    var cpfa = req.body.cpfServerServer;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");

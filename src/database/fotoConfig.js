@@ -3,9 +3,9 @@ const mysql = require("mysql2");
 // CONEXÃO DO MYSQL WORKBENCH (LOCAL)
 const mySqlConfig = {
   host: "localhost",
-  database: "aquatech2",
+  database: "webOCI",
   user: "root",
-  password: "Weasleygina30",
+  password: "Weasleygina30*",
 }
 
 function executar(instrucao) {
@@ -21,7 +21,7 @@ function executar(instrucao) {
       resolve(resultados);
     });
     conexao.on('error', function (erro) {
-      return ("ERRO NO MySQL WORKBENCH (Local): ", erro.sqlMessage);
+      console.log("ERRO NO MySQL WORKBENCH (Local): ", erro.sqlMessage);
     });
   });
 }

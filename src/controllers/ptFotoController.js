@@ -2,11 +2,12 @@ const usuarioModel = require('../models/ptFotoModel');
 
 
 function salvar(req, res) {
+  console.log("FILE:", req.file);
   const imagem = req.file.filename;
 
   const {nome, email} = req.body
 
-  const usuario = { nome, email, imagem }
+  const usuario = { imagem }
   
   usuarioModel.salvar(usuario)
   .then(resultado => {

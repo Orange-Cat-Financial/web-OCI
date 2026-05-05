@@ -11,8 +11,6 @@
     <h1>TESTANDO UPLOAD DE ARQUIVOS PARA PAGINA</h1>
     <br />
     <div>
-      <input name="nome" id="nome" type="text" />
-      <input name="email" id="email" type="url" />
       <input name="foto" id="foto" type="file" />
       <button onclick="enviar()">Enviar</button>
     </div>
@@ -25,15 +23,13 @@
   function enviar() {
     const formData = new FormData();
     formData.append("foto", foto.files[0]);
-    formData.append("nome", nome.value);
-    formData.append("email", email.value);
 
-    fetch("/usuarios/cadastro", {
+    fetch("/foto/cadastro", {
       method: "POST",
       body: formData,
     })
       .then((res) => {
-        window.location = "./perfil.html";
+        window.location = "addTr.html";
       })
       .catch((err) => {
         console.log(err);
