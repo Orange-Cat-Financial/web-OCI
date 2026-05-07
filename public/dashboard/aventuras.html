@@ -19,7 +19,7 @@
     />
   </head>
 
-  <body>
+  <body onload="atualizarFeed()">
     <header id="cabecalho">
       <div class="ft_e_nm">
         <a href="../index.html">
@@ -33,9 +33,12 @@
       <div class="criar_conta_he">
         <div class="usuarioHeader">
           <img
+            id="img_usuario"
             src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
             style="width: 38px; height: 38px"
-          /><a class="hd_nm_usuario" href="../cadastro.html">Usuario</a>
+          /><a class="hd_nm_usuario" href="../cadastro.html"
+            ><span id="b_usuario">usuário</span></a
+          >
         </div>
       </div>
     </header>
@@ -43,7 +46,9 @@
       <div class="pt_esquerda_menu">
         <div class="ls_esq">
           <a href="addTr.html">Transação</a>
-          <a href="aventuras.html">Aventuras</a><a href="">Transação</a>
+          <a href="aventuras.html">Aventuras</a
+          ><a href="addAventura.html">addAventura</a>
+          <a href="historicoTr.html">Historico</a>
         </div>
       </div>
       <div class="pt_direita_conteudo">
@@ -141,52 +146,7 @@
 
 <script>
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
-
-  function limparFormulario() {
-    document.getElementById("form_postagem").reset();
-  }
-
-  function publicar() {
-    var idUsuario = sessionStorage.ID_USUARIO;
-
-    var corpo = {
-      titulo: form_postagem.titulo.value,
-      descricao: form_postagem.descricao.value,
-    };
-
-    fetch(`/avisos/publicar/${idUsuario}`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corpo),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          window.alert(
-            "Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!",
-          );
-          window.location = "/dashboard/mural.html";
-          limparFormulario();
-          finalizarAguardar();
-        } else if (resposta.status == 404) {
-          window.alert("Deu 404!");
-        } else {
-          throw (
-            "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
-            resposta.status
-          );
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
-  }
+  img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
   function editar(idAviso) {
     sessionStorage.ID_POSTAGEM_EDITANDO = idAviso;
@@ -229,7 +189,7 @@
   }
 
   function atualizarFeed() {
-    fetch("/avisos/listar")
+    fetch("/transacao/listar")
       .then(function (resposta) {
         if (resposta.ok) {
           if (resposta.status == 204) {

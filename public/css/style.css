@@ -4,6 +4,11 @@ body{
     font-family: "Krona One", sans-serif;
     color: white;
 }
+
+#img_usuario{
+    border-radius: 50%;
+    border: 2px solid white;
+}
 a{
     display: flex;
     justify-content: center;
@@ -193,6 +198,11 @@ h4{
     font-size: 13px;
     line-height: 15px;
     color: darkgray;
+}
+
+.usuarioHeader{
+    display: flex;
+    gap: 10px;
 }
 
 .pt_infos{

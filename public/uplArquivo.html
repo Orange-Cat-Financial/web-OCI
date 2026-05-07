@@ -14,6 +14,7 @@
       <input name="foto" id="foto" type="file" />
       <button onclick="enviar()">Enviar</button>
     </div>
+    <a href="dashboard/addTr.html">Voltar</a>
 
     <div id="container"></div>
   </body>
@@ -29,7 +30,7 @@
       body: formData,
     })
       .then((res) => {
-        window.location = "addTr.html";
+        window.location = "dashboard/addTr.html";
       })
       .catch((err) => {
         console.log(err);

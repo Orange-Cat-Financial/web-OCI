@@ -91,9 +91,11 @@
               console.log(JSON.stringify(json));
               sessionStorage.EMAIL_USUARIO = json.email;
               sessionStorage.NOME_USUARIO = json.nome;
+              sessionStorage.ID_USUARIO = json.idUsuario;
+              sessionStorage.FOTO_USUARIO = json.fotoPerfil;
 
               setTimeout(function () {
-                window.location = "addTr.html";
+                window.location = "dashboard/addTr.html";
               }, "300"); // apenas para exibir o loading
             });
           } else {

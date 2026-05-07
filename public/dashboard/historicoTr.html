@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orange Cat</title>
+    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/funci.css" />
+    <link rel="stylesheet" href="../css/addTr.css" />
+    <link rel="stylesheet" href="../css/historicoTr.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body
+    onload="
+      atualizarFeed();
+      oValorTotal();
+    "
+  >
+    <header id="cabecalho">
+      <div class="ft_e_nm">
+        <a href="../index.html">
+          <img
+            src="../assets/icones/log-sem-fundo.png"
+            style="height: 90px; width: 80px"
+          />
+        </a>
+        <span> <span style="color: #f65d09">Orange</span> Cat</span>
+      </div>
+      <div class="criar_conta_he">
+        <div class="usuarioHeader">
+          <img
+            id="img_usuario"
+            src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
+            style="width: 38px; height: 38px"
+          /><a class="hd_nm_usuario" href="../cadastro.html"
+            ><span id="b_usuario">usuário</span></a
+          >
+        </div>
+      </div>
+    </header>
+    <div id="pt_baixo_funci">
+      <div class="pt_esquerda_menu">
+        <div class="ls_esq">
+          <a href="addTr.html">Transação</a>
+          <a href="aventuras.html">Aventuras</a
+          ><a href="addAventura.html">addAventura</a>
+          <a href="historicoTr.html">Historico</a>
+          <a href="dashboard.html">Dashboard</a>
+        </div>
+      </div>
+      <div class="pt_direita_conteudo">
+        <h1 id="titulo_da_pagina">Historico de transferencias</h1>
+        <p class="totalRs" id="totalRs">Total na conta: R$8.500,00</p>
+        <div class="container" id="container"></div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
+
+  function editar(idAviso) {
+    sessionStorage.ID_POSTAGEM_EDITANDO = idAviso;
+    console.log("cliquei em editar - " + idAviso);
+    window.alert(
+      "Você será redirecionado à página de edição do aviso de id número: " +
+        idAviso,
+    );
+    window.location = "/dashboard/edicao-aviso.html";
+  }
+
+  function deletar(idAviso) {
+    console.log("Criar função de apagar post escolhido - ID" + idAviso);
+    fetch(`/avisos/deletar/${idAviso}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          window.alert(
+            "Post deletado com sucesso pelo usuario de email: " +
+              sessionStorage.getItem("EMAIL_USUARIO") +
+              "!",
+          );
+          window.location = "/dashboard/mural.html";
+        } else if (resposta.status == 404) {
+          window.alert("Deu 404!");
+        } else {
+          throw (
+            "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
+            resposta.status
+          );
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function atualizarFeed() {
+    let idUsuario = sessionStorage.ID_USUARIO;
+    fetch(`/transacao/listar/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          if (resposta.status == 204) {
+            var feed = document.getElementById("container");
+            var mensagem = document.createElement("span");
+            mensagem.innerHTML = "Nenhum resultado encontrado.";
+            feed.appendChild(mensagem);
+            throw "Nenhum resultado encontrado!!";
+          }
+
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            var feed = document.getElementById("container");
+            feed.innerHTML = "";
+            for (let i = 0; i < resposta.length; i++) {
+              var publicacao = resposta[i];
+              let tipoR = "Retirou";
+
+              // criando e manipulando elementos do HTML via JavaScript
+              var divPublicacao = document.createElement("div");
+              divPublicacao.className = "item";
+
+              if (publicacao.tipo == "receita") {
+                divPublicacao.style.borderBottom = "4px solid green";
+                tipoR = "Recebeu";
+              } else {
+                divPublicacao.style.borderBottom = "4px solid red";
+              }
+              var spanCategoria = document.createElement("span");
+              var spanValor = document.createElement("span");
+              var spanData = document.createElement("span");
+
+              spanValor.innerHTML = `<span>${tipoR}:</span>  <span>R$ ${publicacao.valor}</span>`;
+              spanCategoria.innerHTML = `<span>Categoria:</span>  <span>${publicacao.categoria}</span>`;
+              spanData.innerHTML = `<span>Data:</span>  <span>${publicacao.dataTransacao.split("T")[0]}</span>`;
+
+              divPublicacao.appendChild(spanValor);
+              divPublicacao.appendChild(spanCategoria);
+              divPublicacao.appendChild(spanData);
+
+              feed.appendChild(divPublicacao);
+            }
+          });
+        } else {
+          throw "Houve um erro na API!";
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
+  }
+  function oValorTotal() {
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/transacao/dinheiroTt/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            let total = document.getElementById("totalRs");
+            let dinheiro = Number(resposta[0].valorTotal);
+
+            console.log(resposta);
+
+            total.innerHTML = `Total na conta:  ${dinheiro.toLocaleString(
+              "pt-BR",
+              {
+                style: "currency",
+                currency: "BRL",
+              },
+            )}`;
+          });
+        } else {
+          throw "Houve um erro na API!";
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
+  }
+</script>

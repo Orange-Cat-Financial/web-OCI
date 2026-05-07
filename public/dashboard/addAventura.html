@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/funci.css" />
     <link rel="stylesheet" href="../css/addTr.css" />
+    <link rel="stylesheet" href="../css/addAventura.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,72 +52,51 @@
         </div>
       </div>
       <div class="pt_direita_conteudo">
-        <h1 id="titulo_da_pagina">Adicionar Nova Transação</h1>
+        <h1 id="titulo_da_pagina">Novas aventuras?</h1>
         <div class="caixa_adicionar">
-          <div class="despesa_receita">
-            <input type="radio" name="tipo" id="tip_receita" onclick="fcc()" />
-            <label for="tip_receita" class="seta_cm_txt">
-              <img src="../assets/png/cima_branco.png" class="setas st_cm" />
-              <span>Receita</span>
-            </label>
-            <input type="radio" name="tipo" id="tip_despesa" onclick="fcc()" />
-            <label for="tip_despesa" class="seta_cm_txt">
-              <img src="../assets/png/baixo_branco.png" class="setas st_bx" />
-              <span>Despesa</span>
-            </label>
-          </div>
-          <span id="qtd_dinheiro_exibida" onclick="focarIpt()">R$0.00</span>
-          <div id="dt_e_ctg">
-            <div
-              class="div_info_bx_valor info_baixo_valor"
-              onclick="focarData()"
-            >
-              <img src="../assets/icones/001-calendar.png" /><span id="sp_data"
-                >--/--/----</span
-              >
-            </div>
-            <div
-              class="div_info_bx_valor info_baixo_valor"
-              onclick="focarCtg()"
-            >
-              <img src="../assets/icones/002-category.png" /><span
-                id="sp_categoria"
-                >Categoria</span
-              >
-            </div>
-          </div>
+          <div class="despesa_receita">o o o o o o o</div>
+
           <div class="ipts_baixo">
             <div class="linhas l1">
               <div class="nm_ipts div_ipt_valor">
-                <span class="indicador">Valor:</span>
-                <input
-                  type="number"
-                  id="ipt_valor"
-                  oninput="mudarDinheiro()"
-                  placeholder="EX: 2400"
-                />
-              </div>
-              <div class="nm_ipts div_slc_tipo">
-                <span class="indicador">Categoria:</span>
-                <select id="slc_categoria" onchange="categoriaMos()">
-                  <option value="ctg">Selecione o tipo de transferencia</option>
-                </select>
+                <div class="tx_pg">
+                  <span class="indicador">Titulo da aventura:</span>
+                  <input
+                    type="text"
+                    id="ipt_titulo"
+                    placeholder="EX: Trilha pico Pão de açucar"
+                  />
+                </div>
+                <div class="tx_pg">
+                  <span class="indicador">Data</span>
+                  <input type="date" id="ipt_data" />
+                </div>
+                <div class="tx_pg">
+                  <span class="indicador">Localização</span>
+                  <input
+                    type="text"
+                    id="ipt_local"
+                    placeholder="EX: Trindade"
+                  />
+                </div>
+                <div class="tx_pg">
+                  <span class="indicador">Imagem:</span>
+                  <input
+                    type="file"
+                    id="ipt_"
+                    placeholder="EX: Trilha pico Pão de açucar"
+                  />
+                </div>
               </div>
             </div>
-            <div class="linhas l1">
-              <div class="nm_ipts div_ipt_valor">
-                <span class="indicador">Data:</span>
-                <input type="date" id="ipt_data" onchange="datarMos()" />
-              </div>
-              <div class="nm_ipts div_slc_tipo">
-                <span class="indicador">Descrição:</span>
-                <input type="text" id="ipt" placeholder="(Opcional)" />
-              </div>
-              <a href="../uplArquivo.html">imagem</a>
-            </div>
+
+            <a href="uplArquivo.html">imagem</a>
           </div>
-          <button onclick="publicar()">Adicionar</button>
+          <button onclick="adicionarTransf()">Adicionar</button>
         </div>
+      </div>
+      <div class="cx_canto_descricao">
+        Descricão: <textarea name="" id=""></textarea>
       </div>
     </div>
   </body>
@@ -195,59 +175,5 @@
       style: "currency",
       currency: "BRL",
     })}`;
-  }
-
-  function publicar() {
-    var idUsuario = sessionStorage.ID_USUARIO;
-
-    let valor = Number(ipt_valor.value);
-    let categoria = slc_categoria.value;
-    let dataTransacao = ipt_data.value;
-    let descricao = ipt.value;
-
-    let tipo = null;
-    if (tip_receita.checked) {
-      tipo = "receita";
-    } else if (tip_despesa.checked) {
-      tipo = "despesa";
-    }
-
-    var corpo = {
-      valor: valor,
-      categoria: categoria,
-      dataTransacao: dataTransacao,
-      descricao: descricao,
-      tipo: tipo,
-    };
-
-    fetch(`/transacao/publicar/${idUsuario}`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(corpo),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          window.alert(
-            "Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!",
-          );
-          location.reload();
-        } else if (resposta.status == 404) {
-          window.alert("Deu 404!");
-        } else {
-          throw (
-            "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
-            resposta.status
-          );
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-
-    return false;
   }
 </script>

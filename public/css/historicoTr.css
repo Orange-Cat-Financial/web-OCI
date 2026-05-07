@@ -1,12 +1,14 @@
-
-
 .container{
+    display: flex;
+    justify-content: column;
     margin: 0;
      display: grid;
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 40px; 
-  margin-left: 5px;
-  margin-bottom: 20px;
+    gap: 40px; 
+    margin-left: 5px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 300px;
 }
 
 .item {
@@ -14,9 +16,11 @@
   padding: 10px;
   border-radius: 8px;
   transition: 0.3s;
-  width: 240px;
+  width: 400px;
+  height: 150px;
   display: flex;
   flex-direction: column;
+  gap: 25px;
 }
 
 .item:hover{
@@ -33,4 +37,11 @@
     top: 0px;
     bottom: 0;
    
+}
+
+.item span {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 2px solid #353638;
 }
