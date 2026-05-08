@@ -9,29 +9,21 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/funci.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&family=Manrope:wght@200..800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      .graficos {
-        display: flex;
-        gap: 40px;
-        width: 100%;
-        font-size: 60px;
-      }
-
-      canvas {
-        width: 500px;
-        height: 100px;
-        background-color: #0c0b0b;
-      }
-    </style>
   </head>
 
-  <body>
+  <body
+    onload="
+      atualizarFeed();
+      oValorTotal();
+    "
+  >
     <header id="cabecalho">
       <div class="ft_e_nm">
         <a href="../index.html">
@@ -43,31 +35,119 @@
         <span> <span style="color: #f65d09">Orange</span> Cat</span>
       </div>
       <div class="criar_conta_he">
-        <div class="entrarHeader">
-          <a class="bh_entrar" href="../login.html">Entrar</a
-          ><a class="bh_cadastrar" href="../cadastro.html">Criar conta</a>
+        <div class="usuarioHeader">
+          <img
+            id="img_usuario"
+            src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
+            style="width: 38px; height: 38px"
+          /><a class="hd_nm_usuario" href="../cadastro.html"
+            ><span id="b_usuario">usuário</span></a
+          >
         </div>
       </div>
     </header>
     <div id="pt_baixo_funci">
-      <div class="pt_esquerda_menu">sqws</div>
+      <div class="pt_esquerda_menu">
+        <div class="ls_esq">
+          <a href="addTr.html">Transação</a>
+          <a href="aventuras.html">Aventuras</a
+          ><a href="addAventura.html">addAventura</a>
+          <a href="historicoTr.html">Historico</a>
+          <a href="dashboard.html">Dashboard</a>
+        </div>
+      </div>
       <div class="pt_direita_conteudo">
+        <div class="container">
+          <div class="item">
+            <span>Valor na conta:</span>
+            <span class="valor_kpi_cima">R$ 850,00</span>
+          </div>
+          <div class="item">
+            <span>Ganhos:</span>
+            <div class="seta_com_span">
+              <img src="../assets/png/cima_branco.png" class="setas st_cm" />
+              <span class="valor_kpi_cima">R$ 2.600,00</span>
+            </div>
+          </div>
+          <div class="item">
+            <span>Despesas:</span>
+            <div class="seta_com_span">
+              <img src="../assets/png/baixo_branco.png" class="setas st_bx" />
+              <span class="valor_kpi_cima"> R$ 2.455,00</span>
+            </div>
+          </div>
+        </div>
         <div class="graficos">
-          <canvas id="graficoLinha"></canvas>
+          <div class="graficoEsq">
+            <canvas id="graficoLinha"></canvas>
+          </div>
+          <div class="graficoDir">
+            <canvas id="graficoRosca"></canvas>
+            <div id="sp_g_rosca">
+              <div id="pt_cima_btsl">
+                <h4>Quanto gastou com?</h4>
+                <div id="bt_sl">
+                  <select name="a" id="sda">
+                    <option value="Comida">Comida</option>
+                    <option value="Transporte">Transporte</option>
+                    <option value="Aluguel">Aluguel</option>
+                    <option value="Roupa">Roupa</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+              </div>
+              <div id="gastou_com">
+                <span>Gastou:</span>
+                <span>R$ 345,00</span>
+                <span>Com comida</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kpi_pt_baixo">
+          <div class="kpi_baixo_esquerda">
+            <span class="tema_kpi_baixo">Ultimas 3 transações:</span>
+            <div class="transacao_u5">
+              <span>Despesa</span> <span>R$120,00</span> <span>Lazer</span>
+              <span>08/05/2026</span>
+            </div>
+            <div class="transacao_u5">
+              <span>Despesa</span> <span>R$21,00</span> <span>Comida</span>
+              <span>08/05/2026</span>
+            </div>
+            <div class="transacao_u5">
+              <span>Receita</span> <span>R$600,00</span> <span>Outro</span>
+              <span>06/05/2026</span>
+            </div>
+          </div>
+          <div class="kpi_baixo_direita">
+            <div id="deixar_coluna">
+              <span class="tema_kpi_baixo">Proxima meta:</span>
+              <div class="pt_esquerda_meta">
+                <span
+                  >Falta: <br /><span class="falta_bx_kpi"
+                    >R$ 1.650,00</span
+                  ></span
+                ><span
+                  >Para a meta: <br />
+                  <span class="falta_bx_kpi">R$ 2.500,00</span></span
+                >
+              </div>
+            </div>
+            <canvas id="graficoBarra"></canvas>
+          </div>
         </div>
       </div>
     </div>
   </body>
 </html>
+
 <script>
-  const labelsLinha = [
-    "Janeiro",
-    "fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-  ];
+  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
+
+  const labelsLinha = ["04/28", "04/29", "05/01", "05/03", "05/06", "05/08"];
 
   new Chart(document.getElementById("graficoLinha"), {
     type: "line",
@@ -76,7 +156,7 @@
       datasets: [
         {
           label: "Dinheiro na conta",
-          data: [1200, 1350, 1100, 980, 800, 1150, 1400],
+          data: [1200, 1350, 1100, 980, 800, 1150, 850],
           borderColor: "#e15806",
           backgroundColor: "#e15806",
           borderWidth: 4,
@@ -90,6 +170,90 @@
           grid: {
             color: "#737373",
           },
+        },
+      },
+    },
+  });
+
+  const labelsRosca = [
+    "Comida",
+    "Transporte",
+    "Aluguel",
+    "Roupa",
+    "Lazer",
+    "Outros",
+  ];
+
+  new Chart(document.getElementById("graficoRosca"), {
+    type: "doughnut",
+    data: {
+      labels: labelsRosca,
+      datasets: [
+        {
+          label: "Dinheiro na conta",
+          data: [1200, 1350, 1100, 980, 800, 1150],
+          borderColor: [
+            "#FF6B00",
+            "#FFA559",
+            "#FFD166",
+            "#06D6A0",
+            "#118AB2",
+            "#8338EC",
+          ],
+          backgroundColor: [
+            "#FF6B00",
+            "#FFA559",
+            "#FFD166",
+            "#06D6A0",
+            "#118AB2",
+            "#8338EC",
+          ],
+          borderWidth: 4,
+        },
+      ],
+    },
+    options: {
+      responsive: false,
+    },
+  });
+
+  const ctx = document.getElementById("graficoBarra");
+
+  new Chart(ctx, {
+    type: "bar",
+
+    data: {
+      labels: [""],
+
+      datasets: [
+        {
+          label: "Já tem",
+          data: [34],
+          backgroundColor: "#f65d09",
+        },
+        {
+          label: "Falta",
+          data: [66],
+          backgroundColor: "#6c6969",
+        },
+      ],
+    },
+
+    options: {
+      indexAxis: "y",
+
+      responsive: true,
+
+      scales: {
+        x: {
+          stacked: true,
+          max: 100,
+          display: false,
+        },
+
+        y: {
+          stacked: true,
+          display: false,
         },
       },
     },

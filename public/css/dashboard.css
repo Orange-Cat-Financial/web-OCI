@@ -1,0 +1,204 @@
+.item {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s; 
+  width: 350px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+.container{
+    display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  margin: 20px;
+  gap: 20px;
+}
+
+.graficos {
+        display: flex;
+        gap: 20px;
+        width: 100%;
+        font-size: 60px;
+      }
+
+#graficoLinha {
+  width: 600px;
+  background-color: #1a1a1a;
+}
+.graficoEsq{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  height: 320px;
+  width: 620px;
+  border-radius: 8px;
+
+}
+
+.graficoDir{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: #1a1a1a;
+  height: 320px;
+  width: 620px;
+  border-radius: 8px;
+  border-right: 4px solid red;
+
+}
+
+#sp_g_rosca{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+}
+
+#sp_g_rosca h4{
+  font-size: 22px;
+}
+
+
+#pt_cima_btsl{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+#bt_sl{
+  display: flex;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+#bt_sl button{
+  background-color: #f65d09;
+  border: 0;
+  width: 140px ;
+  height: 35px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+}
+
+#bt_sl select{
+  background-color: white;
+  border: 0;
+  width: 250px ;
+  height: 35px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #f65d09;
+}
+
+#gastou_com{
+  gap: 10px;
+  margin-top: 20px;
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+}
+
+.item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  gap: 10px;
+  border: 2px solid #353638;
+}
+
+.valor_kpi_cima{
+  color: #f65d09;
+}
+
+.st_cm{
+    background-color: green;
+}
+.st_bx{
+    background-color: red;
+}
+
+.setas{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.seta_com_span{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.kpi_pt_baixo{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.kpi_baixo_esquerda{
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a1a;
+  width: 620px;
+  height: 150px;
+  border-radius: 8px;
+  border: 2px solid #353638;
+  gap: 18px;
+
+}
+
+.kpi_baixo_direita{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  width: 620px;
+  height: 150px;
+  border-radius: 8px;
+  border: 2px solid #353638;
+  padding-left: 30px;
+
+
+}
+
+.transacao_u5{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid #353638;
+  padding-left: 10px;
+  padding-right:10px;
+}
+
+.tema_kpi_baixo{
+  color: #f65d09;
+}
+
+.pt_esquerda_meta{
+  display: flex;
+  flex-direction: column;
+  font-size: 22px;
+  margin-top: 7px;
+  gap: 5px;
+
+}
+
+#graficoBarra{
+  margin-right: 50px;
+}
+
+.falta_bx_kpi{
+  color: #f65d09;
+}
