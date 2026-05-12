@@ -146,19 +146,20 @@
 
     if (tip_receita.checked) {
       select.innerHTML = `
-      <option value="Salário">Salário</option>
-      <option value="Presente">Presente</option>
       <option value="Outro">Outro</option>
+      <option value="Presente">Presente</option>
+      <option value="Salário">Salário</option>
 
       `;
     } else if (tip_despesa.checked) {
       select.innerHTML = `
-      <option value="Comida">Comida</option>
-      <option value="Transporte">Transporte</option>
       <option value="Aluguel">Aluguel</option>
-      <option value="Roupa">Roupa</option>
+      <option value="Comida">Comida</option>
+      <option value="Faculdade">Faculdade</option>
       <option value="Lazer">Lazer</option>
       <option value="Outro">Outro</option>
+      <option value="Roupa">Roupa</option>
+      <option value="Transporte">Transporte</option>
     `;
     }
 

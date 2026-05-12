@@ -20,8 +20,10 @@
 
   <body
     onload="
-      atualizarFeed();
+      obterDadosGrafico();
+      obterDadosRosca();
       oValorTotal();
+      retornar3Linhas();
     "
   >
     <header id="cabecalho">
@@ -60,25 +62,25 @@
         <div class="container">
           <div class="item">
             <span>Valor na conta:</span>
-            <span class="valor_kpi_cima">R$ 850,00</span>
+            <span class="valor_kpi_cima" id="saldoTotal">R$ 850,00</span>
           </div>
           <div class="item">
             <span>Ganhos:</span>
             <div class="seta_com_span">
               <img src="../assets/png/cima_branco.png" class="setas st_cm" />
-              <span class="valor_kpi_cima">R$ 2.600,00</span>
+              <span class="valor_kpi_cima" id="totalGanhos">R$ 0,00</span>
             </div>
           </div>
           <div class="item">
             <span>Despesas:</span>
             <div class="seta_com_span">
               <img src="../assets/png/baixo_branco.png" class="setas st_bx" />
-              <span class="valor_kpi_cima"> R$ 2.455,00</span>
+              <span class="valor_kpi_cima" id="totalDespesas"> R$ 0,00</span>
             </div>
           </div>
         </div>
         <div class="graficos">
-          <div class="graficoEsq">
+          <div class="graficoEsq" id="graficoEsq">
             <canvas id="graficoLinha"></canvas>
           </div>
           <div class="graficoDir">
@@ -87,7 +89,7 @@
               <div id="pt_cima_btsl">
                 <h4>Quanto gastou com?</h4>
                 <div id="bt_sl">
-                  <select name="a" id="sda">
+                  <select id="sda" onchange="mostrarGastoCategoria()">
                     <option value="Comida">Comida</option>
                     <option value="Transporte">Transporte</option>
                     <option value="Aluguel">Aluguel</option>
@@ -99,8 +101,8 @@
               </div>
               <div id="gastou_com">
                 <span>Gastou:</span>
-                <span>R$ 345,00</span>
-                <span>Com comida</span>
+                <span id="valorCategoria">R$ 0,00</span>
+                <span id="nomeCategoria">Com comida</span>
               </div>
             </div>
           </div>
@@ -108,18 +110,9 @@
         <div class="kpi_pt_baixo">
           <div class="kpi_baixo_esquerda">
             <span class="tema_kpi_baixo">Ultimas 3 transações:</span>
-            <div class="transacao_u5">
-              <span>Despesa</span> <span>R$120,00</span> <span>Lazer</span>
-              <span>08/05/2026</span>
-            </div>
-            <div class="transacao_u5">
-              <span>Despesa</span> <span>R$21,00</span> <span>Comida</span>
-              <span>08/05/2026</span>
-            </div>
-            <div class="transacao_u5">
-              <span>Receita</span> <span>R$600,00</span> <span>Outro</span>
-              <span>06/05/2026</span>
-            </div>
+            <div class="transacao_u5" id="ul1"></div>
+            <div class="transacao_u5" id="ul2"></div>
+            <div class="transacao_u5" id="ul3"></div>
           </div>
           <div class="kpi_baixo_direita">
             <div id="deixar_coluna">
@@ -149,73 +142,7 @@
 
   const labelsLinha = ["04/28", "04/29", "05/01", "05/03", "05/06", "05/08"];
 
-  new Chart(document.getElementById("graficoLinha"), {
-    type: "line",
-    data: {
-      labels: labelsLinha,
-      datasets: [
-        {
-          label: "Dinheiro na conta",
-          data: [1200, 1350, 1100, 980, 800, 1150, 850],
-          borderColor: "#e15806",
-          backgroundColor: "#e15806",
-          borderWidth: 4,
-        },
-      ],
-    },
-    options: {
-      responsive: false,
-      scales: {
-        y: {
-          grid: {
-            color: "#737373",
-          },
-        },
-      },
-    },
-  });
-
-  const labelsRosca = [
-    "Comida",
-    "Transporte",
-    "Aluguel",
-    "Roupa",
-    "Lazer",
-    "Outros",
-  ];
-
-  new Chart(document.getElementById("graficoRosca"), {
-    type: "doughnut",
-    data: {
-      labels: labelsRosca,
-      datasets: [
-        {
-          label: "Dinheiro na conta",
-          data: [1200, 1350, 1100, 980, 800, 1150],
-          borderColor: [
-            "#FF6B00",
-            "#FFA559",
-            "#FFD166",
-            "#06D6A0",
-            "#118AB2",
-            "#8338EC",
-          ],
-          backgroundColor: [
-            "#FF6B00",
-            "#FFA559",
-            "#FFD166",
-            "#06D6A0",
-            "#118AB2",
-            "#8338EC",
-          ],
-          borderWidth: 4,
-        },
-      ],
-    },
-    options: {
-      responsive: false,
-    },
-  });
+  let proximaAtualizacao;
 
   const ctx = document.getElementById("graficoBarra");
 
@@ -258,4 +185,278 @@
       },
     },
   });
+
+  function obterDadosGrafico(idUsuario) {
+    if (proximaAtualizacao != undefined) {
+      clearTimeout(proximaAtualizacao);
+    }
+
+    fetch(`/medidas/ultimas/${sessionStorage.ID_USUARIO}`, {
+      cache: "no-store",
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGrafico(resposta);
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`,
+        );
+      });
+  }
+
+  function obterDadosRosca(idUsuario) {
+    if (proximaAtualizacao != undefined) {
+      clearTimeout(proximaAtualizacao);
+    }
+
+    fetch(`/medidas/ultimasRosca/${sessionStorage.ID_USUARIO}`, {
+      cache: "no-store",
+    })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            resposta.reverse();
+
+            plotarGraficoRosca(resposta);
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(
+          `Erro na obtenção dos dados p/ gráfico: ${error.message}`,
+        );
+      });
+  }
+
+  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+  // Configura o gráfico (cores, tipo, etc), materializa-o na página e,
+  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+  function plotarGrafico(resposta) {
+    console.log("iniciando plotagem do gráfico...");
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+    let valores = [];
+
+    console.log("----------------------------------------------");
+    console.log(
+      'Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":',
+    );
+    console.log(resposta);
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+    for (let i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      labels.push(registro.dataTransacao);
+      valores.push(registro.SaldoTotal);
+    }
+
+    console.log("----------------------------------------------");
+    console.log("O gráfico será plotado com os respectivos valores:");
+    console.log("Labels:");
+    console.log(labels);
+    console.log("Dados:");
+    console.log("----------------------------------------------");
+
+    new Chart(document.getElementById("graficoLinha"), {
+      type: "line",
+
+      data: {
+        labels: labels,
+
+        datasets: [
+          {
+            label: "Dinheiro na conta",
+
+            data: valores,
+
+            borderColor: "#f65d09",
+            backgroundColor: "#f65d09",
+
+            borderWidth: 3,
+            tension: 0.3,
+          },
+        ],
+      },
+
+      options: {
+        responsive: true,
+      },
+    });
+  }
+
+  function plotarGraficoRosca(resposta) {
+    console.log("iniciando plotagem do gráfico...");
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+    let valores = [];
+
+    console.log("----------------------------------------------");
+    console.log(
+      'Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":',
+    );
+    console.log(resposta);
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+    for (let i = 0; i < resposta.length; i++) {
+      var registro = resposta[i];
+      labels.push(registro.categoria);
+      valores.push(registro.total);
+    }
+
+    const cores = [
+      "#FF6B00",
+      "#00B4D8",
+      "#7B2CBF",
+      "#FFB347",
+      "#D7263D",
+      "#6C757D",
+      "#F5F5F5",
+    ];
+
+    console.log("----------------------------------------------");
+    console.log("O gráfico será plotado com os respectivos valores:");
+    console.log("Labels:");
+    console.log(labels);
+    console.log("Dados:");
+    console.log("----------------------------------------------");
+
+    new Chart(document.getElementById("graficoRosca"), {
+      type: "doughnut",
+
+      data: {
+        labels: labels,
+
+        datasets: [
+          {
+            label: "Gastou",
+
+            data: valores,
+
+            borderColor: cores,
+            backgroundColor: cores,
+          },
+        ],
+      },
+
+      options: {
+        responsive: true,
+      },
+    });
+  }
+
+  function oValorTotal() {
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/transacao/dinheiroTt/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            saldoTotal.innerHTML = Number(
+              resposta[0].valorTotal,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+
+            totalGanhos.innerHTML = Number(resposta[0].receita).toLocaleString(
+              "pt-BR",
+              {
+                style: "currency",
+                currency: "BRL",
+              },
+            );
+            totalDespesas.innerHTML = Number(
+              resposta[0].despesa,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          });
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
+  }
+
+  function mostrarGastoCategoria() {
+    let categoria = sda.value;
+
+    fetch(`/medidas/gastoCategoria/${sessionStorage.ID_USUARIO}/${categoria}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (dados) {
+            let valor = 0;
+
+            if (dados.length > 0) {
+              valor = Number(dados[0].total);
+            }
+
+            valorCategoria.innerHTML = valor.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+
+            nomeCategoria.innerHTML = `Com ${categoria.toLowerCase()}`;
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+  }
+
+  function retornar3Linhas() {
+    console.log("ID USUARIO FRONT:", sessionStorage.ID_USUARIO);
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/medidas/retornar3Linhas/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            ul1.innerHTML = `<span>${resposta.tipo}</span><span>${Number(
+              resposta[0].valor,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}</span><span>${resposta[0].categoria}</span><span>${resposta[0].dataTransacao}</span>`;
+
+            ul2.innerHTML = `<span>${resposta[1].tipo}</span><span>${Number(
+              resposta[1].valor,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}</span><span>${resposta[1].categoria}</span><span>${resposta[1].dataTransacao}</span>`;
+
+            ul3.innerHTML = `<span>${resposta[2].tipo}</span><span>${Number(
+              resposta[2].valor,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}</span><span>${resposta[2].categoria}</span><span>${resposta[2].dataTransacao}</span>`;
+          });
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
+  }
 </script>

@@ -99,7 +99,7 @@
 #gastou_com{
   gap: 10px;
   margin-top: 20px;
-  font-size: 35px;
+  font-size: 25px;
   display: flex;
   flex-direction: column;
 }
