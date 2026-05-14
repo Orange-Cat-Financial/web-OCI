@@ -44,3 +44,12 @@ a{
     gap: 20px;
 }
 
+button{
+    transition: 0.2s;
+}
+
+button:hover{
+    background-color: white;
+    color: #f65d09;
+}
+

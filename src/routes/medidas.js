@@ -16,7 +16,7 @@ router.get("/gastoCategoria/:idUsuario/:categoria", function(req, res){
 });
 
 router.get("/retornar3Linhas/:idUsuario", function(req, res){
-    medidaController.gastoCategoria(req, res);
+    medidaController.retornar3Linhas(req, res);
 });
 
 

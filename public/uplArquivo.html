@@ -24,12 +24,15 @@
   function enviar() {
     const formData = new FormData();
     formData.append("foto", foto.files[0]);
+    formData.append("idUsuario", sessionStorage.ID_USUARIO);
 
     fetch("/foto/cadastro", {
       method: "POST",
       body: formData,
     })
-      .then((res) => {
+      .then((res) => res.json())
+      .then((json) => {
+        sessionStorage.FOTO_USUARIO = json.arquivo;
         window.location = "dashboard/addTr.html";
       })
       .catch((err) => {

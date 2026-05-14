@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../config/configUpload'); // ARQUIVO COM A CONFIGURAÇÃO DO UPLOAD
+const uploadAvent = require('../config/configUploadAventura'); // ARQUIVO COM A CONFIGURAÇÃO DO UPLOAD
 const usuarioController = require('../controllers/ptFotoController');
 
 router.get("", (req, res) => {
@@ -11,6 +12,11 @@ router.get("", (req, res) => {
 router.post('/cadastro', upload.single('foto'), (req, res) => {
   usuarioController.salvar(req, res);
 });
+
+router.post('/cadastroAventura', uploadAvent.single('foto'), (req, res) => {
+  usuarioController.adicionarAventura(req, res);
+});
+
 
 router.get('/:id', upload.single('foto'), (req, res) => {
   usuarioController.buscarUsuarioPeloId(req, res);

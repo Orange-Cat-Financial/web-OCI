@@ -286,7 +286,7 @@
             backgroundColor: "#f65d09",
 
             borderWidth: 3,
-            tension: 0.3,
+            tension: 0.15,
           },
         ],
       },
@@ -396,7 +396,7 @@
   }
 
   function mostrarGastoCategoria() {
-    let categoria = sda.value;
+    let = sda.value;
 
     fetch(`/medidas/gastoCategoria/${sessionStorage.ID_USUARIO}/${categoria}`)
       .then(function (resposta) {
@@ -429,34 +429,32 @@
     fetch(`/medidas/retornar3Linhas/${idUsuario}`)
       .then(function (resposta) {
         if (resposta.ok) {
-          resposta.json().then(function (resposta) {
-            console.log("Dados recebidos: ", JSON.stringify(resposta));
+          resposta.json().then(function (dados) {
+            console.log(
+              "Dados recebidos onde ESTA DANDO ERRO!!!: ",
+              JSON.stringify(dados),
+            );
 
-            ul1.innerHTML = `<span>${resposta.tipo}</span><span>${Number(
-              resposta[0].valor,
-            ).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}</span><span>${resposta[0].categoria}</span><span>${resposta[0].dataTransacao}</span>`;
+            for (let i = 0; i < dados.length; i++) {
+              let linhaAtual = dados[i];
 
-            ul2.innerHTML = `<span>${resposta[1].tipo}</span><span>${Number(
-              resposta[1].valor,
-            ).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}</span><span>${resposta[1].categoria}</span><span>${resposta[1].dataTransacao}</span>`;
-
-            ul3.innerHTML = `<span>${resposta[2].tipo}</span><span>${Number(
-              resposta[2].valor,
-            ).toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}</span><span>${resposta[2].categoria}</span><span>${resposta[2].dataTransacao}</span>`;
+              document.getElementById(`ul${i + 1}`).innerHTML = `
+              <span>${linhaAtual.tipo}</span>
+              <span>
+                ${Number(linhaAtual.valor).toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </span>
+              <span>${linhaAtual.categoria}</span>
+              <span>${linhaAtual.dataTransacao}</span>
+            `;
+            }
           });
         }
       })
-      .catch(function (resposta) {
-        console.error(resposta);
+      .catch(function (erro) {
+        console.error(erro);
       });
   }
 </script>

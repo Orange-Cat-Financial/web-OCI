@@ -44,9 +44,9 @@ function gastoCategoria(idUsuario, categoria){
 function retornar3Linhas(idUsuario){
 
     let instrucaoSql = `
-       select tipo, valor, categoria, dataTransacao 
+       select tipo, valor, categoria, DATE_FORMAT(dataTransacao, '%d/%m/%Y') as dataTransacao 
 	    from transacao where fkUsuario = ${idUsuario}
-        order by dataTransacao desc
+        order by idTransacao desc
 		limit 3;
     `;
 

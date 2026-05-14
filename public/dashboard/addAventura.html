@@ -81,9 +81,12 @@
                 </div>
                 <div class="tx_pg">
                   <span class="indicador">Imagem:</span>
+                  <label for="ipt_imagem_avent" class="label_add_imagem"
+                    >Adicionar imagem</label
+                  >
                   <input
                     type="file"
-                    id="ipt_"
+                    id="ipt_imagem_avent"
                     placeholder="EX: Trilha pico Pão de açucar"
                   />
                 </div>
@@ -92,11 +95,11 @@
 
             <a href="uplArquivo.html">imagem</a>
           </div>
-          <button onclick="adicionarTransf()">Adicionar</button>
+          <button onclick="adicionarAventura()">Adicionar</button>
         </div>
       </div>
       <div class="cx_canto_descricao">
-        Descricão: <textarea name="" id=""></textarea>
+        Descricão: <textarea id="ipt_desc"></textarea>
       </div>
     </div>
   </body>
@@ -105,75 +108,34 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
-  function ftNmUsuario() {}
+  function adicionarAventura() {
+    const formData = new FormData();
 
-  function focarData() {
-    document.getElementById("ipt_data").focus();
-  }
+    let titulo = ipt_titulo.value;
+    let dt = ipt_data.value;
+    let locali = ipt_local.value;
+    let desc = ipt_desc.value;
 
-  function focarCtg() {
-    document.getElementById("slc_categoria").focus();
-  }
+    formData.append("foto", ipt_imagem_avent.files[0]);
+    formData.append("titulo", titulo);
 
-  function fcc() {
-    if (tip_receita.checked) {
-      qtd_dinheiro_exibida.style.borderBottom = "5px solid green";
-    } else if (tip_despesa.checked) {
-      qtd_dinheiro_exibida.style.borderBottom = "5px solid red";
-    }
+    formData.append("data", dt);
 
-    let select = document.getElementById("slc_categoria");
+    formData.append("localizacao", locali);
 
-    if (tip_receita.checked) {
-      select.innerHTML = `
-      <option value="Salário">Salário</option>
-      <option value="Presente">Presente</option>
-      <option value="Outro">Outro</option>
+    formData.append("descricao", desc);
 
-      `;
-    } else if (tip_despesa.checked) {
-      select.innerHTML = `
-      <option value="Comida">Comida</option>
-      <option value="Transporte">Transporte</option>
-      <option value="Aluguel">Aluguel</option>
-      <option value="Roupa">Roupa</option>
-      <option value="Lazer">Lazer</option>
-      <option value="Outro">Outro</option>
-    `;
-    }
+    formData.append("fkUsuario", sessionStorage.ID_USUARIO);
 
-    let categoria = slc_categoria.value;
-    sp_categoria.innerHTML = categoria;
-  }
-
-  function datarMos() {
-    let data = ipt_data.value;
-
-    let partes = data.split("-");
-    let formatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
-
-    sp_data.innerHTML = formatada;
-  }
-
-  function categoriaMos() {
-    let categoria = slc_categoria.value;
-    sp_categoria.innerHTML = categoria;
-  }
-
-  function recOuDes() {
-    let borda;
-    caixa.classList.toggle("ativa");
-  }
-
-  function focarIpt() {
-    document.getElementById("ipt_valor").focus();
-  }
-
-  function mudarDinheiro() {
-    let valor = Number(ipt_valor.value);
-    qtd_dinheiro_exibida.innerHTML = `${valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    })}`;
+    fetch("/foto/cadastroAventura", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => {
+        window.location = "addAventura.html";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 </script>

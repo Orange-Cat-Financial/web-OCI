@@ -21,7 +21,7 @@ function executar(instrucao) {
       resolve(resultados);
     });
     conexao.on('error', function (erro) {
-      console.log("ERRO NO MySQL WORKBENCH (Local): ", erro.sqlMessage);
+      return ("ERRO NO MySQL WORKBENCH (Local): ", erro.sqlMessage);
     });
   });
 }

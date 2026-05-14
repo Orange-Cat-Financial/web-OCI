@@ -44,29 +44,17 @@ function pesquisarDescricao(texto) {
 function listarPorUsuario(idUsuario) {
     console.log("ACESSEI O aventuras MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarPorUsuario()");
     var instrucaoSql = `
-        SELECT 
-            a.id AS idAventuras,
-            a.titulo,
-            a.descricao,
-            a.fkUsuario,
-            u.id AS idUsuario,
-            u.nome,
-            u.email,
-            u.senha
-        FROM aventuras a
-            INNER JOIN usuario u
-                ON a.fkUsuario = u.id
-        WHERE u.id = ${idUsuario};
+        select titulo, descricao, imagem, dtPost, locali from aventuras where fkUsuario = ${idUsuario};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function publicar(titulo, descricao, imagem, idUsuario) {
+function publicar(titulo, descricao, imagem, dtPost, locali,  fkUsuario) {
     console.log("ACESSEI O aventuras MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function publicar(): ", titulo, descricao, idUsuario);
     var instrucaoSql = `
-        INSERT INTO aventuras (titulo, descricao, imagem, fkUsuario) VALUES ('${titulo}', '${descricao}', '${imagem}', '${idUsuario}');
-    `;
+                insert into aventuras (titulo, descricao, imagem, dtPost, locali, fkUsuario) values
+                ('${titulo}', '${descricao}', '${imagem}', '${dtPost}', '${locali}', ${fkUsuario});    `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }

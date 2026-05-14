@@ -1,20 +1,23 @@
 const database = require("../database/fotoConfig");
 
 function salvar(usuario) {
-  const instrucao = `update usuario set fotoPerfil = '${usuario.imagem}' where idUsuario = 1`;
+  const instrucao = `update usuario set fotoPerfil = '${usuario.imagem}' where idUsuario = ${usuario.id};`;
 
-  console.log("SQL:", instrucao);
 
   return database.executar(instrucao);
 }
 
-function buscarUsuarioPeloId(id) {
-  const instrucao = `select * from usuario where id = ${id}`;
+function adicionarAventura(aventura) {
+  const instrucao = `insert into aventuras (titulo, descricao, imagem, dtPost, locali, fkUsuario) values
+('${aventura.titulo}', '${aventura.descricao}', '${aventura.foto}', '${aventura.dtPost}', '${aventura.locali}', ${aventura.fkUsuario});`;
 
-  return database.executar(instrucao [
-    usuario.fotoPerfil,
-    usuario.idUsuario
-  ]);
+  console.log("SQL:", instrucao); 
+
+  return database.executar(instrucao);
 }
 
-module.exports = { salvar, buscarUsuarioPeloId }
+
+
+
+
+module.exports = { salvar, adicionarAventura }
