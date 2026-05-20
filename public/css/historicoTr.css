@@ -45,3 +45,9 @@
   width: 100%;
   border-bottom: 2px solid #353638;
 }
+#sl_tipo{
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+  color: #f65d09;
+}

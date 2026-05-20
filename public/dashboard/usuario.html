@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orange Cat</title>
+    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/funci.css" />
+    <link rel="stylesheet" href="../css/addTr.css" />
+    <link rel="stylesheet" href="../css/perfil.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body onload="oValorTotal()">
+    <header id="cabecalho">
+      <div class="ft_e_nm">
+        <a href="../index.html">
+          <img
+            src="../assets/icones/log-sem-fundo.png"
+            style="height: 90px; width: 80px"
+          />
+        </a>
+        <span> <span style="color: #f65d09">Orange</span> Cat</span>
+      </div>
+      <div class="criar_conta_he">
+        <div class="usuarioHeader">
+          <img
+            id="img_usuario"
+            src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
+            style="width: 38px; height: 38px"
+          /><a class="hd_nm_usuario" href="usuario.html"
+            ><span id="b_usuario">usuário</span></a
+          >
+        </div>
+      </div>
+    </header>
+    <div id="pt_baixo_funci">
+      <div class="pt_esquerda_menu">
+        <div class="ls_esq">
+          <a id="a_transacao" href="addTr.html">Transação</a>
+          <a id="a_historico" href="historicoTr.html">Historico</a>
+          <a id="a_dashboard" href="dashboard.html">Dashboard</a><br />
+          <a id="a_n_aventura" href="addAventura.html">Nova aventura</a>
+          <a id="a_s_aventura" href="aventuras.html">Suas aventuras</a><br />
+          <a id="a_escolhido" href="usuario.html">Perfil</a>
+        </div>
+      </div>
+      <div class="pt_direita_conteudo">
+        <div id="foto_grande">
+          <h1 id="titulo_da_pagina">Perfil</h1>
+          <img
+            id="img_usuario_grande"
+            src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
+          />
+        </div>
+        <span>Atualizar imagem?</span>
+        <label for="foto" class="label_add_imagem"
+          ><input type="file" id="foto" />Clique aqui!</label
+        >
+        <button onclick="enviar()">Enviar</button>
+      </div>
+      <div id="pt_direita_usuario">
+        <h2 id="ola_usuario">Olá, usuario</h2>
+        <div class="container">
+          <div class="item">
+            <span>Valor na conta:</span>
+            <span class="valor_kpi_cima" id="saldoTotal">R$ 0,00</span>
+          </div>
+          <div class="item">
+            <span>Ganhos:</span>
+            <div class="seta_com_span">
+              <img src="../assets/png/cima_branco.png" class="setas st_cm" />
+              <span class="valor_kpi_cima" id="totalGanhos">R$ 0,00</span>
+            </div>
+          </div>
+          <div class="item">
+            <span>Despesas:</span>
+            <div class="seta_com_span">
+              <img src="../assets/png/baixo_branco.png" class="setas st_bx" />
+              <span class="valor_kpi_cima" id="totalDespesas"> R$ 0,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script>
+  b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+  ola_usuario.innerHTML = `Olá, ${sessionStorage.NOME_USUARIO}`;
+  img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
+  img_usuario_grande.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
+
+  function enviar() {
+    const formData = new FormData();
+    formData.append("foto", foto.files[0]);
+    formData.append("idUsuario", sessionStorage.ID_USUARIO);
+
+    fetch("/foto/cadastro", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        sessionStorage.FOTO_USUARIO = json.arquivo;
+        window.location = "usuario.html";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function oValorTotal() {
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/transacao/dinheiroTt/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            saldoTotal.innerHTML = Number(
+              resposta[0].valorTotal,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+
+            totalGanhos.innerHTML = Number(resposta[0].receita).toLocaleString(
+              "pt-BR",
+              {
+                style: "currency",
+                currency: "BRL",
+              },
+            );
+            totalDespesas.innerHTML = Number(
+              resposta[0].despesa,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          });
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
+  }
+</script>

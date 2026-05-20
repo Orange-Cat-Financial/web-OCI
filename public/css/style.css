@@ -82,6 +82,9 @@ a{
     margin-left: 40px;
 
 }
+
+
+
 .criar_conta_he{
     margin-right: 55px;
     gap: 5px;
@@ -217,4 +220,13 @@ h4{
 h3{
     font-size: 38px;
     margin-bottom: 100px;
+}
+
+#a_escolhido{
+    background-color: white;
+    color: #f65d09;
+    height: 30px;
+    width: 200px;
+    border-radius: 8px;
+    font-weight: bold;
 }

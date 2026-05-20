@@ -1,0 +1,63 @@
+h1{
+    font-size: 42px;
+}
+
+#img_usuario_grande{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid white;
+}
+
+.pt_direita_conteudo{
+    margin-left: 100px;
+}
+
+#pt_direita_usuario{
+    padding-top: 50px;
+    padding-left: 250px;
+
+}
+#foto{
+    display: none;
+}
+
+#foto_grande{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+.label_add_imagem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    width: 280px;
+    height: 40px;
+}
+
+.item {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s; 
+  width: 250px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  font-size: 22px;
+  justify-content: center;
+  align-items: center;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.seta_com_span{
+    display: flex;
+}

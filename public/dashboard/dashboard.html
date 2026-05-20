@@ -24,6 +24,7 @@
       obterDadosRosca();
       oValorTotal();
       retornar3Linhas();
+      mostrarGastoCategoria();
     "
   >
     <header id="cabecalho">
@@ -42,7 +43,7 @@
             id="img_usuario"
             src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
             style="width: 38px; height: 38px"
-          /><a class="hd_nm_usuario" href="../cadastro.html"
+          /><a class="hd_nm_usuario" href="usuario.html"
             ><span id="b_usuario">usuário</span></a
           >
         </div>
@@ -51,18 +52,19 @@
     <div id="pt_baixo_funci">
       <div class="pt_esquerda_menu">
         <div class="ls_esq">
-          <a href="addTr.html">Transação</a>
-          <a href="aventuras.html">Aventuras</a
-          ><a href="addAventura.html">addAventura</a>
-          <a href="historicoTr.html">Historico</a>
-          <a href="dashboard.html">Dashboard</a>
+          <a id="a_transacao" href="addTr.html">Transação</a>
+          <a id="a_historico" href="historicoTr.html">Historico</a>
+          <a id="a_escolhido" href="dashboard.html">Dashboard</a><br />
+          <a id="a_n_aventura" href="addAventura.html">Nova aventura</a>
+          <a id="a_s_aventura" href="aventuras.html">Suas aventuras</a><br />
+          <a id="a_usuario" href="usuario.html">Perfil</a>
         </div>
       </div>
       <div class="pt_direita_conteudo">
         <div class="container">
           <div class="item">
             <span>Valor na conta:</span>
-            <span class="valor_kpi_cima" id="saldoTotal">R$ 850,00</span>
+            <span class="valor_kpi_cima" id="saldoTotal">R$ 0,00</span>
           </div>
           <div class="item">
             <span>Ganhos:</span>
@@ -115,20 +117,11 @@
             <div class="transacao_u5" id="ul3"></div>
           </div>
           <div class="kpi_baixo_direita">
-            <div id="deixar_coluna">
-              <span class="tema_kpi_baixo">Proxima meta:</span>
-              <div class="pt_esquerda_meta">
-                <span
-                  >Falta: <br /><span class="falta_bx_kpi"
-                    >R$ 1.650,00</span
-                  ></span
-                ><span
-                  >Para a meta: <br />
-                  <span class="falta_bx_kpi">R$ 2.500,00</span></span
-                >
-              </div>
+            <span class="tema_kpi_baixo">Economizou seus ganhos em:</span>
+
+            <div class="div_por_tt">
+              <div id="pt_esquerda_meta">0.0%</div>
             </div>
-            <canvas id="graficoBarra"></canvas>
           </div>
         </div>
       </div>
@@ -140,51 +133,7 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
-  const labelsLinha = ["04/28", "04/29", "05/01", "05/03", "05/06", "05/08"];
-
   let proximaAtualizacao;
-
-  const ctx = document.getElementById("graficoBarra");
-
-  new Chart(ctx, {
-    type: "bar",
-
-    data: {
-      labels: [""],
-
-      datasets: [
-        {
-          label: "Já tem",
-          data: [34],
-          backgroundColor: "#f65d09",
-        },
-        {
-          label: "Falta",
-          data: [66],
-          backgroundColor: "#6c6969",
-        },
-      ],
-    },
-
-    options: {
-      indexAxis: "y",
-
-      responsive: true,
-
-      scales: {
-        x: {
-          stacked: true,
-          max: 100,
-          display: false,
-        },
-
-        y: {
-          stacked: true,
-          display: false,
-        },
-      },
-    },
-  });
 
   function obterDadosGrafico(idUsuario) {
     if (proximaAtualizacao != undefined) {
@@ -367,23 +316,24 @@
           resposta.json().then(function (resposta) {
             console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-            saldoTotal.innerHTML = Number(
-              resposta[0].valorTotal,
-            ).toLocaleString("pt-BR", {
+            let valorNC = Number(resposta[0].valorTotal);
+            let receitaL = Number(resposta[0].receita);
+            let despesaL = Number(resposta[0].despesa);
+
+            let porcentagem = Number((valorNC / receitaL) * 100).toFixed(1);
+
+            pt_esquerda_meta.innerHTML = `${porcentagem}%`;
+
+            saldoTotal.innerHTML = valorNC.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             });
 
-            totalGanhos.innerHTML = Number(resposta[0].receita).toLocaleString(
-              "pt-BR",
-              {
-                style: "currency",
-                currency: "BRL",
-              },
-            );
-            totalDespesas.innerHTML = Number(
-              resposta[0].despesa,
-            ).toLocaleString("pt-BR", {
+            totalGanhos.innerHTML = receitaL.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+            totalDespesas.innerHTML = despesaL.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             });
@@ -396,7 +346,7 @@
   }
 
   function mostrarGastoCategoria() {
-    let = sda.value;
+    let categoria = sda.value;
 
     fetch(`/medidas/gastoCategoria/${sessionStorage.ID_USUARIO}/${categoria}`)
       .then(function (resposta) {

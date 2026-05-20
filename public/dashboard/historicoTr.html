@@ -41,7 +41,7 @@
             id="img_usuario"
             src="../assets/imgUsuarioAdd/foto-perfil/sem_usuario.png"
             style="width: 38px; height: 38px"
-          /><a class="hd_nm_usuario" href="../cadastro.html"
+          /><a class="hd_nm_usuario" href="usuario.html"
             ><span id="b_usuario">usuário</span></a
           >
         </div>
@@ -50,16 +50,23 @@
     <div id="pt_baixo_funci">
       <div class="pt_esquerda_menu">
         <div class="ls_esq">
-          <a href="addTr.html">Transação</a>
-          <a href="aventuras.html">Aventuras</a
-          ><a href="addAventura.html">addAventura</a>
-          <a href="historicoTr.html">Historico</a>
-          <a href="dashboard.html">Dashboard</a>
+          <a id="a_transacao" href="addTr.html">Transação</a>
+          <a id="a_escolhido" href="historicoTr.html">Historico</a>
+          <a id="a_dashboard" href="dashboard.html">Dashboard</a><br />
+          <a id="a_n_aventura" href="addAventura.html">Nova aventura</a>
+          <a id="a_s_aventura" href="aventuras.html">Suas aventuras</a><br />
+          <a id="a_usuario" href="usuario.html">Perfil</a>
         </div>
       </div>
       <div class="pt_direita_conteudo">
         <h1 id="titulo_da_pagina">Historico de transferencias</h1>
-        <p class="totalRs" id="totalRs">Total na conta: R$8.500,00</p>
+        <p class="totalRs" id="totalRs">Total na conta: R$0,00</p>
+        <span class="totalRs">Qual o tipo de busca?</span>
+        <select id="sl_tipo" onchange="atualizarFeed()">
+          <option value="e">Todos</option>
+          <option value="receita">Receita</option>
+          <option value="despesa">Despesa</option>
+        </select>
         <div class="container" id="container"></div>
       </div>
     </div>
@@ -69,16 +76,6 @@
 <script>
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
-
-  function editar(idAviso) {
-    sessionStorage.ID_POSTAGEM_EDITANDO = idAviso;
-    console.log("cliquei em editar - " + idAviso);
-    window.alert(
-      "Você será redirecionado à página de edição do aviso de id número: " +
-        idAviso,
-    );
-    window.location = "/dashboard/edicao-aviso.html";
-  }
 
   function deletar(idAviso) {
     console.log("Criar função de apagar post escolhido - ID" + idAviso);
@@ -112,7 +109,8 @@
 
   function atualizarFeed() {
     let idUsuario = sessionStorage.ID_USUARIO;
-    fetch(`/transacao/listar/${idUsuario}`)
+    let filtro = sl_tipo.value;
+    fetch(`/transacao/listar/${idUsuario}/${filtro}`)
       .then(function (resposta) {
         if (resposta.ok) {
           if (resposta.status == 204) {

@@ -7,13 +7,13 @@ router.get("/listar", function (req, res) {
     transacaoController.listar(req, res);
 });
 
-router.get("/listar/:idUsuario", function (req, res) {
+router.get("/listar/:idUsuario/:tipo", function (req, res) {
     transacaoController.listarPorUsuario(req, res);
 });
 
 router.get("/dinheiroTt/:idUsuario", function (req, res) {
     transacaoController.listarDinheiroTotalPorUsuario(req, res);
-}); ''
+}); 
 
 router.get("/pesquisar/:descricao", function (req, res) {
     transacaoController.pesquisarDescricao(req, res);
