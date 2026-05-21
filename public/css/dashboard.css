@@ -161,9 +161,7 @@
 
 .kpi_baixo_direita{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
   justify-content: space-between;
   background-color: #1a1a1a;
   width: 620px;
