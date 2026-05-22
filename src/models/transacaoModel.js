@@ -9,6 +9,7 @@ function listar() {
             t.tipo,
             t.dataTransacao,
             t.categoria,
+            t.descricao,
             u.idUsuario AS idUsuario,
             u.nome,
             u.email,
@@ -53,6 +54,7 @@ function listarPorUsuario(idUsuario, tipo) {
             t.tipo,
             t.dataTransacao,
             t.categoria,
+            t.descricao,
             u.idUsuario AS idUsuario,
             u.nome,
             u.email,
@@ -105,10 +107,10 @@ function editar(novaDescricao, idAviso) {
     return database.executar(instrucaoSql);
 }
 
-function deletar(idAviso) {
+function deletar(idTransferencia) {
     console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function deletar():", idAviso);
     var instrucaoSql = `
-        DELETE FROM aviso WHERE id = ${idAviso};
+        DELETE FROM transacao WHERE idTransacao = ${idAviso};
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orange Cat</title>
-    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/icones/log-sem-fundo.png"
+    />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/funci.css" />
     <link rel="stylesheet" href="../css/addTr.css" />
@@ -77,9 +81,9 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
-  function deletar(idAviso) {
-    console.log("Criar função de apagar post escolhido - ID" + idAviso);
-    fetch(`/avisos/deletar/${idAviso}`, {
+  function deletar(idTransferencia) {
+    console.log("Criar função de apagar post escolhido - ID" + idTransferencia);
+    fetch(`/avisos/deletar/${idTransferencia}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -114,8 +118,8 @@
       .then(function (resposta) {
         if (resposta.ok) {
           if (resposta.status == 204) {
-            var feed = document.getElementById("container");
-            var mensagem = document.createElement("span");
+            let feed = document.getElementById("container");
+            let mensagem = document.createElement("span");
             mensagem.innerHTML = "Nenhum resultado encontrado.";
             feed.appendChild(mensagem);
             throw "Nenhum resultado encontrado!!";
@@ -124,14 +128,14 @@
           resposta.json().then(function (resposta) {
             console.log("Dados recebidos: ", JSON.stringify(resposta));
 
-            var feed = document.getElementById("container");
+            let feed = document.getElementById("container");
             feed.innerHTML = "";
             for (let i = 0; i < resposta.length; i++) {
-              var publicacao = resposta[i];
+              let publicacao = resposta[i];
               let tipoR = "Retirou";
 
               // criando e manipulando elementos do HTML via JavaScript
-              var divPublicacao = document.createElement("div");
+              let divPublicacao = document.createElement("div");
               divPublicacao.className = "item";
 
               if (publicacao.tipo == "receita") {
@@ -140,18 +144,68 @@
               } else {
                 divPublicacao.style.borderBottom = "4px solid red";
               }
-              var spanCategoria = document.createElement("span");
-              var spanValor = document.createElement("span");
-              var spanData = document.createElement("span");
+              let spanCategoria = document.createElement("span");
+              let spanValor = document.createElement("span");
+              let spanData = document.createElement("span");
+
+              let modalSpanCategoria = document.createElement("span");
+              let modalSpanValor = document.createElement("span");
+              let modalSpanData = document.createElement("span");
+              let modalSpanDescricao = document.createElement("span");
+
+              let modalFundoTopEscuro = document.createElement("div");
+              modalFundoTopEscuro.className = "modal-bg";
+
+              let modal = document.createElement("div");
+              modal.className = "modal";
+
+              let botoesRowModal = document.createElement("div");
+              botoesRowModal.className = "botoesRowModal";
+
+              let modalTitulo = document.createElement("b");
+              let modalDescricao = document.createElement("span");
+              let btFechar = document.createElement("button");
+              let btDeletar = document.createElement("button");
+
+              modalTitulo.innerHTML = publicacao.titulo;
 
               spanValor.innerHTML = `<span>${tipoR}:</span>  <span>R$ ${publicacao.valor}</span>`;
               spanCategoria.innerHTML = `<span>Categoria:</span>  <span>${publicacao.categoria}</span>`;
               spanData.innerHTML = `<span>Data:</span>  <span>${publicacao.dataTransacao.split("T")[0]}</span>`;
 
+              modalSpanValor.innerHTML = `<span>${tipoR}:</span>  <span>R$ ${publicacao.valor}</span>`;
+              modalSpanCategoria.innerHTML = `<span>Categoria:</span>  <span>${publicacao.categoria}</span>`;
+              modalSpanData.innerHTML = `<span>Data:</span>  <span>${publicacao.dataTransacao.split("T")[0]}</span>`;
+              modalSpanDescricao.innerHTML = `${publicacao.descricao}`;
+
+              btFechar.innerHTML = "x";
+              btDeletar.innerHTML = "del";
+
+              divPublicacao.onclick = function () {
+                modalFundoTopEscuro.style.display = "flex";
+              };
+
+              btFechar.onclick = function () {
+                modalFundoTopEscuro.style.display = "none";
+              };
+
+              btDeletar.onclick = function () {
+                deletar();
+              };
+
               divPublicacao.appendChild(spanValor);
               divPublicacao.appendChild(spanCategoria);
               divPublicacao.appendChild(spanData);
 
+              modal.appendChild(modalSpanValor);
+              modal.appendChild(modalSpanCategoria);
+              modal.appendChild(modalSpanData);
+              modal.appendChild(modalSpanDescricao);
+              botoesRowModal.appendChild(btFechar);
+              botoesRowModal.appendChild(btDeletar);
+              modal.appendChild(botoesRowModal);
+              modalFundoTopEscuro.appendChild(modal);
+              feed.appendChild(modalFundoTopEscuro);
               feed.appendChild(divPublicacao);
             }
           });

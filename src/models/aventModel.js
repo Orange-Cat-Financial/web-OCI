@@ -44,7 +44,7 @@ function pesquisarDescricao(texto) {
 function listarPorUsuario(idUsuario) {
     console.log("ACESSEI O aventuras MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listarPorUsuario()");
     var instrucaoSql = `
-        select titulo, descricao, imagem, dtPost, locali from aventuras where fkUsuario = ${idUsuario};
+        select titulo, descricao, imagem, dtPost, locali from aventuras where fkUsuario = ${idUsuario} order by idAventura desc;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

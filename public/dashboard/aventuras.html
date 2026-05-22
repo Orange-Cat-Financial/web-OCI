@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orange Cat</title>
-    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/icones/log-sem-fundo.png"
+    />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/funci.css" />
     <link rel="stylesheet" href="../css/addTr.css" />
@@ -91,10 +95,53 @@
             feed.innerHTML = "";
             for (let i = 0; i < resposta.length; i++) {
               let publicacao = resposta[i];
-
+              if (publicacao.imagem == "") {
+                publicacao.imagem = "gatos_aventura.png";
+              }
               // criando e manipulando elementos do HTML via JavaScript
               let divPublicacao = document.createElement("div");
               divPublicacao.className = "item";
+
+              let divModal = document.createElement("div");
+              divModal.className = "modal";
+
+              let modalFundoTopEscuro = document.createElement("div");
+              modalFundoTopEscuro.className = "modal-bg";
+
+              let modal = document.createElement("div");
+              modal.className = "modal";
+
+              let modalTitulo = document.createElement("b");
+
+              let modalImg = document.createElement("img");
+
+              let modalDescricao = document.createElement("span");
+
+              let btFechar = document.createElement("button");
+              let btDeletar = document.createElement("button");
+
+              modalTitulo.innerHTML = publicacao.titulo;
+
+              modalDescricao.innerHTML = publicacao.descricao;
+
+              modalImg.src = `../assets/imgUsuarioAdd/foto-avent/${publicacao.imagem}`;
+              console.log(publicacao.imagem);
+
+              btFechar.innerHTML = "x";
+
+              btDeletar.innerHTML = "Deletar";
+
+              divPublicacao.onclick = function () {
+                modalFundoTopEscuro.style.display = "flex";
+              };
+
+              btFechar.onclick = function () {
+                modalFundoTopEscuro.style.display = "none";
+              };
+
+              btDeletar.onclick = function () {
+                deletar();
+              };
 
               let pTitulo = document.createElement("p");
               let imgs = document.createElement("img");
@@ -104,8 +151,18 @@
 
               divPublicacao.appendChild(pTitulo);
               divPublicacao.appendChild(imgs);
+              modal.appendChild(modalTitulo);
+
+              modal.appendChild(modalImg);
+
+              modal.appendChild(modalDescricao);
+
+              modal.appendChild(btFechar);
+
+              modalFundoTopEscuro.appendChild(modal);
 
               feed.appendChild(divPublicacao);
+              feed.appendChild(modalFundoTopEscuro);
             }
           });
         } else {
@@ -114,6 +171,42 @@
       })
       .catch(function (resposta) {
         console.error(resposta);
+      });
+  }
+  // function abrir() {
+  //   modalFundoTopEscuro.style.display = "flex";
+  // }
+  // function fechar() {
+  //   modalFundoTopEscuro.style.display = "none";
+  // }
+
+  function deletar(idTransferencia) {
+    console.log("Criar função de apagar post escolhido - ID" + idTransferencia);
+    fetch(`/avisos/deletar/${idTransferencia}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(function (resposta) {
+        if (resposta.ok) {
+          window.alert(
+            "Post deletado com sucesso pelo usuario de email: " +
+              sessionStorage.getItem("EMAIL_USUARIO") +
+              "!",
+          );
+          window.location = "/dashboard/mural.html";
+        } else if (resposta.status == 404) {
+          window.alert("Deu 404!");
+        } else {
+          throw (
+            "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
+            resposta.status
+          );
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
       });
   }
 </script>

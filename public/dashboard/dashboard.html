@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orange Cat</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" type="image/png" href="img/log-sem-fundo.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../assets/icones/log-sem-fundo.png"
+    />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/funci.css" />
     <link rel="stylesheet" href="../css/dashboard.css" />
@@ -118,16 +122,10 @@
           </div>
           <div class="kpi_baixo_direita">
             <div id="deixar_coluna">
-              <span class="tema_kpi_baixo">Proxima meta:</span>
+              <span class="tema_kpi_baixo">Economizou:</span>
               <div class="pt_esquerda_meta">
-                <span
-                  >Falta: <br /><span class="falta_bx_kpi"
-                    >R$ 1.650,00</span
-                  ></span
-                ><span
-                  >Para a meta: <br />
-                  <span class="falta_bx_kpi">R$ 2.500,00</span></span
-                >
+                <span id="falta_bx_kpi">10%</span
+                ><span id="da_receita">Da receita</span>
               </div>
             </div>
             <canvas id="graficoBarra"></canvas>
@@ -142,53 +140,9 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
-  const labelsLinha = ["04/28", "04/29", "05/01", "05/03", "05/06", "05/08"];
-
   let proximaAtualizacao;
 
-  const ctx = document.getElementById("graficoBarra");
-
-  new Chart(ctx, {
-    type: "bar",
-
-    data: {
-      labels: [""],
-
-      datasets: [
-        {
-          label: "Já tem",
-          data: [34],
-          backgroundColor: "#f65d09",
-        },
-        {
-          label: "Falta",
-          data: [66],
-          backgroundColor: "#6c6969",
-        },
-      ],
-    },
-
-    options: {
-      indexAxis: "y",
-
-      responsive: true,
-
-      scales: {
-        x: {
-          stacked: true,
-          max: 100,
-          display: false,
-        },
-
-        y: {
-          stacked: true,
-          display: false,
-        },
-      },
-    },
-  });
-
-  function obterDadosGrafico(idUsuario) {
+  function obterDadosGrafico() {
     if (proximaAtualizacao != undefined) {
       clearTimeout(proximaAtualizacao);
     }
@@ -215,7 +169,7 @@
       });
   }
 
-  function obterDadosRosca(idUsuario) {
+  function obterDadosRosca() {
     if (proximaAtualizacao != undefined) {
       clearTimeout(proximaAtualizacao);
     }
@@ -308,7 +262,7 @@
 
     console.log("----------------------------------------------");
     console.log(
-      'Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":',
+      'Estes dados foram recebidos pela funcao "plotarGraficoRosca" e passados para "plotarGraficoRosca":',
     );
     console.log(resposta);
 
@@ -322,10 +276,10 @@
     const cores = [
       "#FF6B00",
       "#00B4D8",
-      "#7B2CBF",
       "#FFB347",
       "#D7263D",
       "#6C757D",
+      "#7B2CBF",
       "#F5F5F5",
     ];
 
@@ -363,37 +317,34 @@
   function oValorTotal() {
     let idUsuario = sessionStorage.ID_USUARIO;
 
-    fetch(`/transacao/dinheiroTt/${idUsuario}`)
-      .then(function (resposta) {
-        if (resposta.ok) {
-          resposta.json().then(function (resposta) {
-            console.log("Dados recebidos: ", JSON.stringify(resposta));
-            let valorNC = Number(resposta[0].valorTotal);
-            let receitaL = Number(resposta[0].receita);
-            let despesaL = Number(resposta[0].despesa);
-            //ARQCOMP
-            let porcentagem = Number((valorNC / receitaL) * 100).toFixed(1);
-            sessionStorage.POR_PARA_PLOTAR = porcentagem;
+    fetch(`/transacao/dinheiroTt/${idUsuario}`).then(function (resposta) {
+      if (resposta.ok) {
+        resposta.json().then(function (resposta) {
+          console.log("Dados recebidos: ", JSON.stringify(resposta));
+          let valorNC = Number(resposta[0].valorTotal);
+          let receitaL = Number(resposta[0].receita);
+          let despesaL = Number(resposta[0].despesa);
+          //ARQCOMP
+          let porcentagem = Number((valorNC / receitaL) * 100).toFixed(1);
+          falta_bx_kpi.innerHTML = `${porcentagem}%`;
+          plotarGraficoEconomizouBarra(porcentagem);
 
-            saldoTotal.innerHTML = valorNC.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            });
-
-            totalGanhos.innerHTML = receitaL.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            });
-            totalDespesas.innerHTML = despesaL.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            });
+          saldoTotal.innerHTML = valorNC.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
           });
-        }
-      })
-      .catch(function (resposta) {
-        console.error(resposta);
-      });
+
+          totalGanhos.innerHTML = receitaL.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          });
+          totalDespesas.innerHTML = despesaL.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          });
+        });
+      }
+    });
   }
 
   function mostrarGastoCategoria() {
@@ -457,5 +408,69 @@
       .catch(function (erro) {
         console.error(erro);
       });
+  }
+
+  function plotarGraficoEconomizouBarra(porcentagem) {
+    console.log("iniciando plotagem do gráfico...");
+
+    // Criando estrutura para plotar gráfico - labels
+    let labels = [];
+    let valores = [];
+
+    console.log("----------------------------------------------");
+    console.log(
+      'Estes dados foram recebidos pela funcao "plotarGraficoEconomizouBarra" e passados para "plotarGrafico":',
+    );
+
+    // Inserindo valores recebidos em estrutura para plotar o gráfico
+
+    console.log("----------------------------------------------");
+    console.log("O gráfico será plotado com os respectivos valores:");
+    console.log("Labels:");
+    console.log(labels);
+    console.log("Dados:");
+    console.log("----------------------------------------------");
+
+    const ctx = document.getElementById("graficoBarra");
+
+    new Chart(ctx, {
+      type: "bar",
+
+      data: {
+        labels: [""],
+
+        datasets: [
+          {
+            label: "Economizou",
+            data: [porcentagem],
+            backgroundColor: "#f65d09",
+          },
+          {
+            label: "Gastou",
+            data: [100 - porcentagem],
+            backgroundColor: "#6c6969",
+          },
+        ],
+      },
+
+      options: {
+        indexAxis: "y",
+
+        responsive: true,
+
+        scales: {
+          x: {
+            stacked: true,
+            max: 100,
+            display: false,
+          },
+
+          y: {
+            stacked: true,
+            display: false,
+          },
+        },
+      },
+    });
   }
 </script>

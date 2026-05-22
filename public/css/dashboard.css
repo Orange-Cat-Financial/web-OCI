@@ -185,22 +185,24 @@
   font-size: 30px;
 }
 
-#pt_esquerda_meta{
+.pt_esquerda_meta{
   display: flex;
   flex-direction: column;
-  font-size: 80px;
-  margin-top: 7px;
-  gap: 5px;
-  color: #f65d09;
+  
 
 }
 
 #graficoBarra{
-  margin-right: 50px;
+  margin-right: 20px;
 }
 
-.falta_bx_kpi{
+#falta_bx_kpi{
+  font-size: 60px;
   color: #f65d09;
+}
+
+#da_receita{
+  font-size: 30px;
 }
 
 .div_por_tt{

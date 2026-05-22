@@ -136,7 +136,7 @@ function editar(req, res) {
 }
 
 function deletar(req, res) {
-    var idAviso = req.params.idAviso;
+    var idTransferencia = req.params.idAviso;
 
     avisoModel.deletar(idAviso)
         .then(
