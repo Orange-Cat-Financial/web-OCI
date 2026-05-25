@@ -29,11 +29,12 @@
       oValorTotal();
       retornar3Linhas();
       mostrarGastoCategoria();
+      validarSessao();
     "
   >
     <header id="cabecalho">
       <div class="ft_e_nm">
-        <a href="../index.html">
+        <a href="dashboard.html">
           <img
             src="../assets/icones/log-sem-fundo.png"
             style="height: 90px; width: 80px"
@@ -124,7 +125,7 @@
             <div id="deixar_coluna">
               <span class="tema_kpi_baixo">Economizou:</span>
               <div class="pt_esquerda_meta">
-                <span id="falta_bx_kpi">10%</span
+                <span id="falta_bx_kpi">0%</span
                 ><span id="da_receita">Da receita</span>
               </div>
             </div>
@@ -472,5 +473,32 @@
         },
       },
     });
+  }
+
+  function validarSessao() {
+    let sessao = obterSessao();
+    if (!sessao.id) {
+      window.location = "login.html";
+    }
+    return sessao;
+  }
+
+  function obterSessao() {
+    let id = sessionStorage.getItem("ID_USUARIO");
+    let nome = sessionStorage.getItem("NOME_USUARIO");
+    let email = sessionStorage.getItem("EMAIL_USUARIO");
+
+    if (id && !sessionStorage.getItem("ID_USUARIO")) {
+      sessionStorage.setItem("ID_USUARIO", id);
+      sessionStorage.setItem("NOME_USUARIO", nome);
+      sessionStorage.setItem("EMAIL_USUARIO", email);
+    }
+
+    return { id, nome, email };
+  }
+
+  function sair() {
+    sessionStorage.clear();
+    window.location = "home.html";
   }
 </script>

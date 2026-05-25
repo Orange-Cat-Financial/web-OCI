@@ -25,7 +25,7 @@
   <body>
     <header id="cabecalho">
       <div class="ft_e_nm">
-        <a href="../index.html">
+        <a href="addAventura.html">
           <img
             src="../assets/icones/log-sem-fundo.png"
             style="height: 90px; width: 80px"
@@ -136,5 +136,32 @@
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function obterSessao() {
+    let id = sessionStorage.getItem("ID_USUARIO");
+    let nome = sessionStorage.getItem("NOME_USUARIO");
+    let email = sessionStorage.getItem("EMAIL_USUARIO");
+
+    if (id && !sessionStorage.getItem("ID_USUARIO")) {
+      sessionStorage.setItem("ID_USUARIO", id);
+      sessionStorage.setItem("NOME_USUARIO", nome);
+      sessionStorage.setItem("EMAIL_USUARIO", email);
+    }
+
+    return { id, nome, email };
+  }
+
+  function validarSessao() {
+    let sessao = obterSessao();
+    if (!sessao.id) {
+      window.location = "login.html";
+    }
+    return sessao;
+  }
+
+  function sair() {
+    sessionStorage.clear();
+    window.location = "home.html";
   }
 </script>
