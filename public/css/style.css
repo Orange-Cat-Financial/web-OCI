@@ -121,12 +121,12 @@ h2{
     font-size: 15px;
 }
 
-#primeiraPt{
+.primeiraPt{
     width: 900px;
     display: flex;
     width: 100%;
     flex-direction: row;
-    padding-top: 50px;
+    padding-top: 110px;
     justify-content: space-around;
     margin-top: 30px;
 }
@@ -156,20 +156,22 @@ h2{
     border: 1px solid grey;
 }
 .imagem_pc{
-    width: 700px;
-    height: 400px;
+    margin-top: 0;
+    width: 600px;
+    height: 500px;
 }
 .primeiraPt_esquerda{
     margin-left: 50px;
 }
 .primeiraPt_direita{
+    margin-top: -60px;
     margin-right: 20px;
 }
 #segundaPt{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 150px;
+    padding-top: 50px;
     
 }
 .infoP{
@@ -215,7 +217,6 @@ h4{
     width: 90%;
     border-bottom:2px solid darkgray;
     padding-bottom: 60px ;
-    margin-bottom: 400px;
 }
 h3{
     font-size: 38px;
@@ -229,4 +230,121 @@ h3{
     width: 200px;
     border-radius: 8px;
     font-weight: bold;
+}
+
+
+.imagem_dash_pt3{
+    margin-top: 100px;
+    width: 650px;
+    height: 300px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    margin-bottom: 200px;
+}
+
+
+.imagem_polaroide{
+    margin-top: -80px;
+    height: 600px;
+    clip-path: inset(100px 0 100px 0);
+}
+
+
+.pt3_dash{
+    margin-top: 100px;
+    width: 90%;
+    border-bottom: 2px solid darkgray;
+    justify-content: space-between;
+    margin-left: auto;
+  margin-right: auto;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#rodape {
+  background-color: #040404;
+  border-top: 1px solid #1a1a1a;
+  padding: 50px 10%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.rodape_topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  height: 10px;
+}
+
+.rodape_links {
+  display: flex;
+  gap: 30px;
+}
+
+.rodape_links a {
+  font-size: 14px;
+  color: white;
+  justify-content: flex-start;
+  font-weight: 500;
+}
+
+.rodape_links a:hover {
+  color: #f65d09;
+}
+
+.rodape_base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10px;
 }
