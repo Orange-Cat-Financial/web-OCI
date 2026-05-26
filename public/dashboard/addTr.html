@@ -240,9 +240,6 @@
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          window.alert(
-            "Post realizado com sucesso pelo usuario de ID: " + idUsuario + "!",
-          );
           location.reload();
         } else if (resposta.status == 404) {
           window.alert("Deu 404!");
