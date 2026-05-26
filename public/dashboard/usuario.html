@@ -26,7 +26,7 @@
   <body onload="oValorTotal()">
     <header id="cabecalho">
       <div class="ft_e_nm">
-        <a href="../index.html">
+        <a href="usuario.html">
           <img
             src="../assets/icones/log-sem-fundo.png"
             style="height: 90px; width: 80px"
@@ -78,6 +78,7 @@
             <span>Valor na conta:</span>
             <span class="valor_kpi_cima" id="saldoTotal">R$ 0,00</span>
           </div>
+
           <div class="item">
             <span>Ganhos:</span>
             <div class="seta_com_span">
@@ -92,6 +93,7 @@
               <span class="valor_kpi_cima" id="totalDespesas"> R$ 0,00</span>
             </div>
           </div>
+          <button onclick="sair()" id="bt_sair">Sair da conta</button>
         </div>
       </div>
     </div>
@@ -158,5 +160,11 @@
       .catch(function (resposta) {
         console.error(resposta);
       });
+  }
+
+  function sair() {
+    sessionStorage.clear();
+
+    window.location = "../index.html";
   }
 </script>
