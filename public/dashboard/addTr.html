@@ -21,7 +21,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body onload="oValorTotal()">
     <header id="cabecalho">
       <div class="ft_e_nm">
         <a href="addTr.html">
@@ -124,7 +124,9 @@
         </div>
       </div>
       <div class="cx_canto_descricao">
-        <h4>Meta!</h4>
+        <b>Você ainda tem:</b>
+        <b id="total_conta">Meta!</b>
+        <b>na conta</b>
       </div>
     </div>
   </body>
@@ -132,8 +134,6 @@
 <script>
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
-
-  function ftNmUsuario() {}
 
   function focarData() {
     document.getElementById("ipt_data").focus();
@@ -255,5 +255,28 @@
       });
 
     return false;
+  }
+
+  function oValorTotal() {
+    let idUsuario = sessionStorage.ID_USUARIO;
+
+    fetch(`/transacao/dinheiroTt/${idUsuario}`)
+      .then(function (resposta) {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+            total_conta.innerHTML = Number(
+              resposta[0].valorTotal,
+            ).toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            });
+          });
+        }
+      })
+      .catch(function (resposta) {
+        console.error(resposta);
+      });
   }
 </script>
