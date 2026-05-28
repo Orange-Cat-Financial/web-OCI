@@ -1,22 +1,23 @@
-# Orange Cat
+# 🐱 Orange Cat
 
 > Aplicação Web para Controle Financeiro Pessoal e Registro de Memórias.
 
-O **Orange Cat** é uma plataforma intuitiva desenvolvida para ajudar jovens estudantes e trabalhadores a gerenciarem suas finanças sem burocracia ou planilhas complexas. Além do fluxo tradicional de entradas e saídas, o sistema conta com o módulo exclusivo **Aventuras**, permitindo associar economias financeiras a registros de memórias e conquistas reais.[cite: 2]
+O **Orange Cat** é uma plataforma intuitiva desenvolvida para ajudar jovens estudantes e trabalhadores a gerenciarem suas finanças sem burocracia ou planilhas complexas. Além do fluxo tradicional de entradas e saídas, o sistema conta com o módulo exclusivo **Aventuras**, permitindo associar economias financeiras a registros de memórias e conquistas reais.
 
 ---
 
 ## 📸 Demonstração
 
-readMe\home-home.png
-readMe\home-dash.png
-readMe\home-aventuras.png
+### 🏠 Visão Geral da Home
+![Home](readMe/home-home.png)
+![Dashboard Inicial](readMe/home-dash.png)
+![Módulo Aventuras Inicial](readMe/home-aventuras.png)
 
 ### 📊 Dashboard Principal
-readMe\pj-dash.png
+![Dashboard do Orange Cat](readMe/pj-dash.png)
 
-### 📸 Módulo Aventuras
-readMe\pj-aventuras.png
+### 📸 Módulo Aventuras & Conquistas
+![Módulo Aventuras](readMe/pj-aventuras.png)
 
 ---
 
@@ -24,7 +25,7 @@ readMe\pj-aventuras.png
 
 O projeto foi construído utilizando tecnologias modernas de desenvolvimento web focado em performance e experiência do usuário:
 
-*   **Front-end:** HTML5, CSS3 e JavaScript (Vanilla)[cite: 2]
+*   **Front-end:** HTML5, CSS3 e JavaScript (Vanilla)
 *   **Gráficos:** Chart.js[cite: 2]
 *   **Back-end:** Node.js[cite: 2] (API para recebimento, tratamento e envio de requisições)
 *   **Banco de Dados:** MySQL[cite: 2] (Persistência dos dados de usuários, finanças e aventuras)
@@ -39,3 +40,17 @@ Este projeto não é apenas uma ferramenta técnica, ele foi estruturado para ge
 *   **ODS 8 – Trabalho Decente e Crescimento Econômico:** Capacita o jovem trabalhador a administrar o que ganha, mitigando riscos de superendividamento precoce e gerando autonomia financeira no início da carreira.
 
 ---
+
+## 🚀 Como Executar o Projeto Localmente
+
+### Pré-requisitos
+Antes de começar, você vai precisar ter instalado em sua máquina:
+*   [Node.js](https://nodejs.org/)[cite: 2]
+*   [MySQL](https://www.mysql.com/)[cite: 2]
+
+### Passo a Passo
+
+1. **Clone o repositório:**
+```bash
+   git clone [https://github.com/SEU_USUARIO/orange-cat.git](https://github.com/SEU_USUARIO/orange-cat.git)
+   cd orange-cat
