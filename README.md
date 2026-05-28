@@ -26,9 +26,9 @@ O **Orange Cat** é uma plataforma intuitiva desenvolvida para ajudar jovens est
 O projeto foi construído utilizando tecnologias modernas de desenvolvimento web focado em performance e experiência do usuário:
 
 *   **Front-end:** HTML5, CSS3 e JavaScript (Vanilla)
-*   **Gráficos:** Chart.js[cite: 2]
-*   **Back-end:** Node.js[cite: 2] (API para recebimento, tratamento e envio de requisições)
-*   **Banco de Dados:** MySQL[cite: 2] (Persistência dos dados de usuários, finanças e aventuras)
+*   **Gráficos:** Chart.js
+*   **Back-end:** Node.js(API para recebimento, tratamento e envio de requisições)
+*   **Banco de Dados:** MySQL (Persistência dos dados de usuários, finanças e aventuras)
 
 ---
 
