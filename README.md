@@ -1,4 +1,4 @@
-# 🐱 Orange Cat
+# Orange Cat
 
 > Aplicação Web para Controle Financeiro Pessoal e Registro de Memórias.
 
@@ -6,9 +6,9 @@ O **Orange Cat** é uma plataforma intuitiva desenvolvida para ajudar jovens est
 
 ---
 
-## 📸 Demonstração
+## Demonstração
 
-### 🏠 Visão Geral da Home
+### Visão Geral da Home
 ![Home](readMe/home-home.png)
 ![Dashboard Inicial](readMe/home-dash.png)
 ![Módulo Aventuras Inicial](readMe/home-aventuras.png)
@@ -16,7 +16,7 @@ O **Orange Cat** é uma plataforma intuitiva desenvolvida para ajudar jovens est
 ### 📊 Dashboard Principal
 ![Dashboard do Orange Cat](readMe/pj-dash.png)
 
-### 📸 Módulo Aventuras & Conquistas
+### 📸 Módulo Aventuras
 ![Módulo Aventuras](readMe/pj-aventuras.png)
 
 ---
@@ -32,7 +32,7 @@ O projeto foi construído utilizando tecnologias modernas de desenvolvimento web
 
 ---
 
-## 🌍 Alinhamento com as ODS (Metas da ONU)
+## Alinhamento com as ODS (Metas da ONU)
 
 Este projeto não é apenas uma ferramenta técnica, ele foi estruturado para gerar impacto social alinhado com os Objetivos de Desenvolvimento Sustentável da ONU:
 
@@ -40,17 +40,3 @@ Este projeto não é apenas uma ferramenta técnica, ele foi estruturado para ge
 *   **ODS 8 – Trabalho Decente e Crescimento Econômico:** Capacita o jovem trabalhador a administrar o que ganha, mitigando riscos de superendividamento precoce e gerando autonomia financeira no início da carreira.
 
 ---
-
-## 🚀 Como Executar o Projeto Localmente
-
-### Pré-requisitos
-Antes de começar, você vai precisar ter instalado em sua máquina:
-*   [Node.js](https://nodejs.org/)[cite: 2]
-*   [MySQL](https://www.mysql.com/)[cite: 2]
-
-### Passo a Passo
-
-1. **Clone o repositório:**
-```bash
-   git clone [https://github.com/SEU_USUARIO/orange-cat.git](https://github.com/SEU_USUARIO/orange-cat.git)
-   cd orange-cat
