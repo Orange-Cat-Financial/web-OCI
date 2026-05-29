@@ -2,13 +2,16 @@ var database = require("../database/config");
 
 function buscarValorNoDia(idUsuario, limite_linhas) {
 
-    var instrucaoSql = `select date_format(t1.dataTransacao, '%d/%m') as dataTransacao,
+    var instrucaoSql = `select
+     date_format(t1.dataTransacao, '%d/%m') as dataTransacao,
      sum(
 	case 
 		when t2.tipo = 'despesa' then -t2.valor
         else t2.valor
         end) as SaldoTotal
-	from transacao t1 join transacao t2 on t2.dataTransacao <= t1.dataTransacao
+	from transacao t1 
+    join transacao t2 
+    on t2.dataTransacao <= t1.dataTransacao
     where t1.fkUsuario = ${idUsuario} and t2.fkUsuario = ${idUsuario}
     group by t1.dataTransacao
     order by t1.dataTransacao desc

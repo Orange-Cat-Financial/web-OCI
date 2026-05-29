@@ -198,13 +198,10 @@
       });
   }
 
-  // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-  // Configura o gráfico (cores, tipo, etc), materializa-o na página e,
-  // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+  // mostrar função
   function plotarGrafico(resposta) {
     console.log("iniciando plotagem do gráfico...");
 
-    // Criando estrutura para plotar gráfico - labels
     let labels = [];
     let valores = [];
 
@@ -214,19 +211,11 @@
     );
     console.log(resposta);
 
-    // Inserindo valores recebidos em estrutura para plotar o gráfico
     for (let i = 0; i < resposta.length; i++) {
       var registro = resposta[i];
       labels.push(registro.dataTransacao);
       valores.push(registro.SaldoTotal);
     }
-
-    console.log("----------------------------------------------");
-    console.log("O gráfico será plotado com os respectivos valores:");
-    console.log("Labels:");
-    console.log(labels);
-    console.log("Dados:");
-    console.log("----------------------------------------------");
 
     new Chart(document.getElementById("graficoLinha"), {
       type: "line",
@@ -258,7 +247,6 @@
   function plotarGraficoRosca(resposta) {
     console.log("iniciando plotagem do gráfico...");
 
-    // Criando estrutura para plotar gráfico - labels
     let labels = [];
     let valores = [];
 
@@ -268,7 +256,6 @@
     );
     console.log(resposta);
 
-    // Inserindo valores recebidos em estrutura para plotar o gráfico
     for (let i = 0; i < resposta.length; i++) {
       var registro = resposta[i];
       labels.push(registro.categoria);
@@ -415,23 +402,10 @@
   function plotarGraficoEconomizouBarra(porcentagem) {
     console.log("iniciando plotagem do gráfico...");
 
-    // Criando estrutura para plotar gráfico - labels
-    let labels = [];
-    let valores = [];
-
     console.log("----------------------------------------------");
     console.log(
       'Estes dados foram recebidos pela funcao "plotarGraficoEconomizouBarra" e passados para "plotarGrafico":',
     );
-
-    // Inserindo valores recebidos em estrutura para plotar o gráfico
-
-    console.log("----------------------------------------------");
-    console.log("O gráfico será plotado com os respectivos valores:");
-    console.log("Labels:");
-    console.log(labels);
-    console.log("Dados:");
-    console.log("----------------------------------------------");
 
     const ctx = document.getElementById("graficoBarra");
 
