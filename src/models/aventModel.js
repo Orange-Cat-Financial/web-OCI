@@ -78,7 +78,6 @@ function deletar(idAventuras) {
 }
 
 module.exports = {
-    listar,
     listarPorUsuario,
     pesquisarDescricao: pesquisarDescricao,
     publicar,
