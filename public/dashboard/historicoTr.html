@@ -81,35 +81,35 @@
   b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
   img_usuario.src = `../assets/imgUsuarioAdd/foto-perfil/${sessionStorage.FOTO_USUARIO}`;
 
-  function deletar(idTransferencia) {
-    console.log("Criar função de apagar post escolhido - ID" + idTransferencia);
-    fetch(`/avisos/deletar/${idTransferencia}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(function (resposta) {
-        if (resposta.ok) {
-          window.alert(
-            "Post deletado com sucesso pelo usuario de email: " +
-              sessionStorage.getItem("EMAIL_USUARIO") +
-              "!",
-          );
-          window.location = "/dashboard/mural.html";
-        } else if (resposta.status == 404) {
-          window.alert("Deu 404!");
-        } else {
-          throw (
-            "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
-            resposta.status
-          );
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
+  // function deletar(idTransferencia) {
+  //   console.log("Criar função de apagar post escolhido - ID" + idTransferencia);
+  //   fetch(`/avisos/deletar/${idTransferencia}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then(function (resposta) {
+  //       if (resposta.ok) {
+  //         window.alert(
+  //           "Post deletado com sucesso pelo usuario de email: " +
+  //             sessionStorage.getItem("EMAIL_USUARIO") +
+  //             "!",
+  //         );
+  //         window.location = "/dashboard/mural.html";
+  //       } else if (resposta.status == 404) {
+  //         window.alert("Deu 404!");
+  //       } else {
+  //         throw (
+  //           "Houve um erro ao tentar realizar a postagem! Código da resposta: " +
+  //           resposta.status
+  //         );
+  //       }
+  //     })
+  //     .catch(function (resposta) {
+  //       console.log(`#ERRO: ${resposta}`);
+  //     });
+  // }
 
   function atualizarFeed() {
     let idUsuario = sessionStorage.ID_USUARIO;
